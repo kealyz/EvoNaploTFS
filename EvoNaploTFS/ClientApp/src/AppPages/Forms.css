@@ -1,0 +1,48 @@
+﻿body {
+}
+
+.DivCard {
+    font-size: 1.2rem;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.3);
+    display: table;
+    margin: 0 auto;
+}
+.DivCard td
+{
+    height: 60px;
+    vertical-align: top;
+}
+.ErrorParagraph
+{
+    color: red;
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+}
+.DivCard input[type="text"]
+{
+    border: none;
+    border-bottom: 1px solid limegreen;
+}
+.DivCard input[type="text"]:focus
+{
+    outline: none;
+}
+
+.DivCard input[type="password"] {
+    border: none;
+    border-bottom: 1px solid limegreen;
+}
+
+.DivCard input[type="password"]:focus {
+    outline: none;
+}
+
+.SuccessParagraph {
+    color: limegreen;
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+}

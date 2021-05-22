@@ -1,0 +1,46 @@
+﻿#UserImage{
+    width: 100px;
+    pointer-events: none;
+}
+li{
+    list-style-type: none;
+}
+.MainDisplayTable tr td{
+    padding: 5px;
+}
+.DataTable tr td
+{
+    padding: 0px 10px;
+}
+.CommentCard {
+    padding: 5px;
+    width: 80%;
+    margin-top: 20px;
+}
+.CommentHeader {
+    background-color: rgba(50,205,0,0.6);
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px;
+    margin: 0px;
+}
+.CommentContent{
+    padding: 10px 15px 5px 15px;
+    margin: 0px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 0px 0px 10px 10px;
+}
+hr {
+    height: 3px;
+    border: 0;
+    margin: 0;
+    background-color: #fff;
+    background-image: linear-gradient(left, #f7f6f4, #fff, #f7f6f4);
+}
+
+    hr::after {
+        content: '';
+        display: block;
+        height: 1px;
+        background-color: rgba(0,0,0,0.5);
+        background-image: linear-gradient(left, #f7f6f4, #c3c3c3, #f7f6f4);
+    }
