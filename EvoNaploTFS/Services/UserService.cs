@@ -60,6 +60,18 @@ namespace EvoNaploTFS.Services
                 return new UserDTO();
             }
         }
+        public User GetUserToEditById(int id)
+        {
+            var user = _evoNaploContext.Users.FirstOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                return new User(user);
+            }
+            else
+            {
+                return new User();
+            }
+        }
 
         public IEnumerable<StudentCommentDTO> GetStudentComments(int id)
         {
@@ -77,6 +89,19 @@ namespace EvoNaploTFS.Services
                 result.Add(new StudentCommentDTO(comment,commenterName));
             }
             return result;
+        }
+
+        public async Task<IEnumerable<User>> EditUser(User user)
+        {
+            var UserToEdit = await _evoNaploContext.Users.FindAsync(user.Id);
+            UserToEdit.Email = user.Email;
+            UserToEdit.FirstName = user.FirstName;
+            UserToEdit.LastName = user.LastName;
+            UserToEdit.PhoneNumber = user.PhoneNumber;
+            UserToEdit.Password = user.Password;
+            _evoNaploContext.SaveChanges();
+            var Users = _evoNaploContext.Users.Where(m => m.Role == UserToEdit.Role);
+            return Users.ToList();
         }
 
         public async Task<IEnumerable<User>> DeleteUser(int id)

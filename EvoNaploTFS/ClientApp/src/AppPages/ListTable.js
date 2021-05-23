@@ -60,7 +60,9 @@ export default function RenderTable(props) {
                                     <a href={"UserPageView/" + row.id}>
                                         <BsEye className="ActionIcon ViewIcon" onClick={() => ViewContent(row.id, props.url)} />
                                     </a>
-                                    <BsPencil class="ActionIcon EditIcon" onClick={() => EditContent(row.id, props.url)} />
+                                    <a href={"EditUserPage/" + row.id}>
+                                        <BsPencil class="ActionIcon EditIcon" onClick={() => EditContent(row.id, props.url)} />
+                                    </a>
                                     <BsTrashFill class="ActionIcon RemoveIcon" onClick={() => RemoveContent(row.id, props.url)} />
                                 </td>
                             </tr>

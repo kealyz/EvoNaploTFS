@@ -13,6 +13,7 @@ import UserPageView from './AppPages/UserPageView/UserPageView';
 
 import './custom.css'
 import './components/Accordion.css'
+import EditUserPage from './AppPages/EditUserPage/EditUserPage';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -29,6 +30,7 @@ export default class App extends Component {
                 <Route path='/Register' component={RegisterPage} />
                 <Route path='/Admins' component={AdminsPage} />
                 <Route path='/UserPageView/:id' component={UserPageView} />
+                <Route path='/EditUserPage/:id' component={EditUserPage} />
             </Layout>
         );
     }

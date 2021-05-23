@@ -1,4 +1,5 @@
-﻿using EvoNaploTFS.Models.DTO;
+﻿using EvoNaploTFS.Models;
+using EvoNaploTFS.Models.DTO;
 using EvoNaploTFS.Models.TableConnectors;
 using EvoNaploTFS.Services;
 using Microsoft.AspNetCore.Http;
@@ -44,15 +45,28 @@ namespace EvoNaploTFS.Controllers
         {
             return _userService.GetUserById(id);
         }
-        
+
+        [HttpGet("GetUserToEditById")]
+        public User GetUserToEditById(int id)
+        {
+            return _userService.GetUserToEditById(id);
+        }
+
         [HttpGet("GetStudentComments")]
         public IEnumerable<StudentCommentDTO> GetStudentComments(int id)
         {
             return _userService.GetStudentComments(id);
         }
 
+        //PUT
+        [HttpPut("EditUser")]
+        public async Task<int> EditUser([FromBody]User user)
+        {
+            await _userService.EditUser(user);
+            return StatusCodes.Status200OK;
+        }
+
         //Delete
-        // api/Student/delete jsonben paramból id
         [HttpDelete("DELETE")]
         public async Task<int> DeleteUser(int id)
         {
