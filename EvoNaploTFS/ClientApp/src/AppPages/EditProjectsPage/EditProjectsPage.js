@@ -17,7 +17,7 @@ export default function EditUserPage(props) {
 
     useEffect(() => {
         if (props.match.params.id !== undefined) {
-            fetch('api/Projects/GetProjectToEditById/?id=' + props.match.params.id)
+            fetch('api/Project/GetProjectToEditById/?id=' + props.match.params.id)
                 .then(response => response.json())
                 .then(json => setProject({ id: json.id, projectName: json.projectName, description: json.description, sourceLink: json.sourceLink, technologies: json.technologies }))
         }
@@ -37,7 +37,7 @@ export default function EditUserPage(props) {
         setErrors(returnedErrors);
 
         if (Object.keys(returnedErrors).length == 0) {
-            fetch('api/Projects/EditProject', { method: 'PUT', body: JSON.stringify(project), headers: { "Content-Type": "application/json" } })
+            fetch('api/Project/EditProject', { method: 'PUT', body: JSON.stringify(project), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
                 })

@@ -24,7 +24,7 @@ namespace EvoNaploTFS.Models
 
         public Project(Project project)
         {
-            
+            Id = project.Id;
             ProjectName = project.ProjectName;
             Description = project.Description;
             SourceLink = project.SourceLink;

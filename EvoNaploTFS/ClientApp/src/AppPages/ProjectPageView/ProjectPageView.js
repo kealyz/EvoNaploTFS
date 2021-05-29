@@ -11,7 +11,7 @@ export default function UserPageView(props) {
 
     useEffect(() => {
         if (props.match.params.id !== undefined) {
-            fetch('api/Projects/GetProjectById/?id=' + props.match.params.id)
+            fetch('api/Project/GetProjectById/?id=' + props.match.params.id)
                 .then(response => response.json())
                 .then(json => setProject(json))
         }
