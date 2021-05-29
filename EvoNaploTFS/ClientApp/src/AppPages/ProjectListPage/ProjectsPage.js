@@ -1,52 +1,31 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, useEffect, useState } from 'react';
 import GetObjectPropValues from '../../components/GetObjectPropValues/GetObjectPropValues';
+import GetObjectPropValuesMonitor from '../../components/GetObjectPropValues/GetObjectPropValuesMonitor';
 import Accordion from '../../components/Accordion/Accordion';
+import ListTable from '../ListTable';
 
-export class ProjectsPage extends Component {
-    static displayName = ProjectsPage.name;
+export default function ProjectsPage() {
+    const [data, setData] = useState([]);
+    const [q, setQ] = useState("");
+    const fetchUrl = '/Projects';
 
-    constructor(props) {
-        super(props);
-        this.state = { projects: [], loading: true };
+
+    useEffect(() => {
+        fetch('api/Project' + fetchUrl)
+            .then(response => response.json())
+            .then(json => setData(json))
+    }, []);
+
+    function search(rows) {
+        return rows.filter(row => row.projectName.toLowerCase().indexOf(q.toLowerCase()) > -1)
     }
 
-    componentDidMount() {
-        this.populateProjectsData();
-    }
-
-    static renderProjectsTable(projects) {
-        return (
-            <div>
-                {projects.map(project =>
-                    <Accordion title={project.name} content={GetObjectPropValues(project)} />
-                )}
-            </div>
-        );
-    }
-
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : ProjectsPage.renderProjectsTable(this.state.projects);
-
-        return (
-            <div>
-                <h1 id="tabelLabel" >Project forecast :)</h1>
-                <p>Ló.</p>
-                {contents}
-            </div>
-        );
-    }
-
-    async populateProjectsData() {
-        const response = await fetch('api/Project');
-        const data = await response.json();
-        this.setState({ projects: data, loading: false });
-        console.log("aaaa");
-        //fetch('api/Student')
-        //    .then(response => response.json())
-        //    .then(users => console.warn(users))
-
-        //this.setState({ students: users, loading: false });
-    }
+    return (
+        <div>
+            Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
+            <br/>
+            <br/>
+            <ListTable data={search(data)} url={'api/Project'} />
+        </div>
+    );
 }
