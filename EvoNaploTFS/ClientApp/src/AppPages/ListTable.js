@@ -21,7 +21,7 @@ function useWindowSize() {
 }
 
 function RemoveContent(row, url) {
-    //alert("Remove data with id [" + row + "] (" + url + ")");
+    alert("Remove data with id [" + row + "] (" + url + ")");
     url = url + "/DELETE/?ID=" + row;
     fetch(url, { method: 'DELETE' });
     window.location.reload(false);
@@ -32,13 +32,29 @@ function EditContent(row, url) {
 }
 
 function ViewContent(row, url) {
-
+    alert("Edit data with id [" + row + "] (" + url + ")");
 }
 
 export default function RenderTable(props) {
     const columns = props.data[0] && Object.keys(props.data[0]);
     const [height, width] = useWindowSize();
     const users = props.data;
+    var pageViewURL;//= "UserPageView/";
+    var editPageURL;// = "EditUserPage/";
+
+    switch (props.url) {
+        case 'api/User':
+            pageViewURL = "UserPageView/";
+            editPageURL = "EditUserPage/";
+            break;
+        case 'api/Semester':
+            pageViewURL = "SemesterPageView/";
+            editPageURL = "EditSemesterPage/";
+            break;
+        default:
+        // code block
+    }
+    
 
     if (width > 600) {
         return (
@@ -57,10 +73,10 @@ export default function RenderTable(props) {
                                     <td>{row[column]}</td>
                                 )}
                                 <td>
-                                    <a href={"UserPageView/" + row.id}>
+                                    <a href={pageViewURL + row.id}>
                                         <BsEye className="ActionIcon ViewIcon" onClick={() => ViewContent(row.id, props.url)} />
                                     </a>
-                                    <a href={"EditUserPage/" + row.id}>
+                                    <a href={editPageURL + row.id}>
                                         <BsPencil class="ActionIcon EditIcon" onClick={() => EditContent(row.id, props.url)} />
                                     </a>
                                     <BsTrashFill class="ActionIcon RemoveIcon" onClick={() => RemoveContent(row.id, props.url)} />

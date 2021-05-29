@@ -8,12 +8,16 @@ import StudentsPage from './AppPages/StudentListPage/StudentsPage'
 import  MentorsPage  from './AppPages/MentorListPage/MentorsPage'
 import { ProjectsPage } from './AppPages/ProjectListPage/ProjectsPage'
 import  RegisterPage  from './AppPages/RegisterPage/RegisterPage';
-import  AdminsPage  from './AppPages/AdminListPage/AdminsPage';
+import AdminsPage from './AppPages/AdminListPage/AdminsPage';
+import SemesterPage from './AppPages/SemesterListPage/SemesterPage';
 import UserPageView from './AppPages/UserPageView/UserPageView';
+import EditUserPage from './AppPages/EditUserPage/EditUserPage';
+import SemesterPageView from './AppPages/SemesterPageView/SemesterPageView';
+import EditSemesterPage from './AppPages/EditSemesterPage/EditSemesterPage';
 
 import './custom.css'
 import './components/Accordion.css'
-import EditUserPage from './AppPages/EditUserPage/EditUserPage';
+
 
 export default class App extends Component {
     static displayName = App.name;
@@ -26,11 +30,14 @@ export default class App extends Component {
                 <Route path='/fetch-data' component={FetchData} />
                 <Route path='/Students' component={StudentsPage} />
                 <Route path='/Mentors' component={MentorsPage} />
-                <Route path='/Projects' component={ProjectsPage} />
-                <Route path='/Register' component={RegisterPage} />
                 <Route path='/Admins' component={AdminsPage} />
+                <Route path='/Projects' component={ProjectsPage} />
+                <Route path='/Semesters' component={SemesterPage} />
+                <Route path='/Register' component={RegisterPage} />
                 <Route path='/UserPageView/:id' component={UserPageView} />
                 <Route path='/EditUserPage/:id' component={EditUserPage} />
+                <Route path='/SemesterPageView/:id' component={SemesterPageView} />
+                <Route path='/EditSemesterPage/:id' component={EditSemesterPage} />          
             </Layout>
         );
     }
