@@ -51,6 +51,10 @@ export default function RenderTable(props) {
             pageViewURL = "SemesterPageView/";
             editPageURL = "EditSemesterPage/";
             break;
+        case 'api/Project':
+            pageViewURL = "ProjectPageView/";
+            editPageURL = "EditProjectsPage/";
+            break;
         default:
         // code block
     }
