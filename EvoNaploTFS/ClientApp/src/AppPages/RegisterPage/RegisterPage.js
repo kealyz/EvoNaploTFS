@@ -31,7 +31,7 @@ const RegisterPage = () => {
         setErrors(returnedErrors);
 
         if (Object.keys(returnedErrors).length == 0) {
-            fetch('api/Student', { method: 'POST', body: JSON.stringify(user), headers: { "Content-Type": "application/json" } })
+            fetch('api/Student/AddStudent', { method: 'POST', body: JSON.stringify(user), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
                 })

@@ -14,6 +14,7 @@ import UserPageView from './AppPages/UserPageView/UserPageView';
 import EditUserPage from './AppPages/EditUserPage/EditUserPage';
 import SemesterPageView from './AppPages/SemesterPageView/SemesterPageView';
 import EditSemesterPage from './AppPages/EditSemesterPage/EditSemesterPage';
+import AddSemesterPage from './AppPages/RegisterPage/AddSemesterPage';
 import ProjectPageView from './AppPages/ProjectPageView/ProjectPageView';
 import EditProjectsPage from './AppPages/EditProjectsPage/EditProjectsPage';
 
@@ -41,6 +42,7 @@ export default class App extends Component {
                 <Route path='/EditUserPage/:id' component={EditUserPage} />
                 <Route path='/SemesterPageView/:id' component={SemesterPageView} />
                 <Route path='/EditSemesterPage/:id' component={EditSemesterPage} />
+                <Route path='/AddSemesterPage' component={AddSemesterPage} />
                 <Route path='/ProjectPageView/:id' component={ProjectPageView} />
                 <Route path='/EditProjectsPage/:id' component={EditProjectsPage} />
             </Layout>

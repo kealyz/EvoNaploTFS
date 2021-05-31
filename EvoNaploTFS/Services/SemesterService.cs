@@ -19,13 +19,13 @@ namespace EvoNaplo.Services
         {
             _evoNaploContext = EvoNaploContext;
         }
-        //public async Task<IEnumerable<Semester>> PostAddSemester(SemesterDTO semesterDTO)
-        //{
+        public async Task<IEnumerable<Semester>> AddSemester(Semester semester)
+        {
 
-        //    await _evoNaploContext.Semesters.AddAsync(new Semester(semesterDto.StartDate, semesterDto.EndDate, semesterDto.DemoDate));
-        //    _evoNaploContext.SaveChanges();
-        //    return _evoNaploContext.Semesters.ToList();
-        //}
+            await _evoNaploContext.Semesters.AddAsync(new Semester(semester));
+            _evoNaploContext.SaveChanges();
+            return _evoNaploContext.Semesters.ToList();
+        }
         public IEnumerable<SemesterDTO> GetSemesters()
         {
             var semesters = _evoNaploContext.Semesters;
@@ -69,24 +69,23 @@ namespace EvoNaplo.Services
             return _evoNaploContext.Semesters.ToList();
         }
 
-        //public async Task<IEnumerable<Semester>> PutEditSemester(int id, SemesterDto semesterDto)
-        //{
-        //    _logger.LogInformation($"{id} ID-vel rendelkező szemeszter keresése");
-        //    var semesterToEdit = await _evoNaploContext.Semesters.FindAsync(id);
-        //    _logger.LogInformation($"{id} ID-vel rendelkező szemeszter módosítása indul {semesterDto} adatokra");
-        //    semesterToEdit.StartDate = semesterDto.StartDate;
-        //    semesterToEdit.EndDate = semesterDto.EndDate;
-        //    semesterToEdit.DemoDate = semesterDto.DemoDate;
-        //    _evoNaploContext.SaveChanges();
-        //    _logger.LogInformation($"{id} ID-vel rendelkező szemeszter módosítása kész");
-        //    return _evoNaploContext.Semesters.ToList();
-        //}
         public async Task<IEnumerable<Semester>> DeleteSemester(int id)
         {
             var semesterToDelete = await _evoNaploContext.Semesters.FindAsync(id);
             _evoNaploContext.Remove(semesterToDelete);
             _evoNaploContext.SaveChanges();
             return _evoNaploContext.Semesters.ToList();
+        }
+
+        public IEnumerable<ProjectDTO> GetSemesterProjects(int id)
+        {
+            var semesterProjects = _evoNaploContext.Projects.Where(c => c.SemesterId == id);
+            List<ProjectDTO> result = new List<ProjectDTO>();
+            foreach (var project in semesterProjects)
+            {
+                result.Add(new ProjectDTO(project));
+            }
+            return result;
         }
     }
 }

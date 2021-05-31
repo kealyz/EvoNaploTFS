@@ -21,7 +21,7 @@ namespace EvoNaploTFS.Controllers
             _studentService = StudentService;
         }
 
-        [HttpPost]
+        [HttpPost("AddStudent")]
         public async Task<int> PostAddStudent([FromBody]User user)
         {
             await _studentService.AddStudent(user);

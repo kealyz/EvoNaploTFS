@@ -24,6 +24,9 @@ export default function StudentsPage() {
     return (
         <div>
             Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
+            <form class="AddSemesterButton" action="/AddSemesterPage" style={{ textAlign: 'right' }}>
+                <input type="submit" value="Add Semester" />
+            </form>
             <br />
             <br />
             <ListTable data={search(data)} url={'api/Semester'} />

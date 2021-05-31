@@ -19,17 +19,15 @@ namespace EvoNaplo.Controllers
             _semesterService = SemesterService;
         }
 
-        // Add
-        // POST /api/Semester Postman body részébe az adatok
-        //[HttpPost]
-        //public async Task<int> /*IEnumerable<Semester>*/ PostAddSemester(SemesterDto semesterDto)
-        //{
-        //    await _semesterService.PostAddSemester(semesterDto);
-        //    return StatusCodes.Status200OK;
-        //}
+        [HttpPost("AddSemester")]
+        public async Task<int> AddSemester([FromBody]Semester semester)
+        {
+            await _semesterService.AddSemester(semester);
+            return StatusCodes.Status200OK;
+        }
 
         // List
-        // GET /api/Semester
+        // GET /api/Semester/Semesters
         [HttpGet("Semesters")]
         public IEnumerable<SemesterDTO> GetSemesters()
         {
@@ -65,13 +63,12 @@ namespace EvoNaplo.Controllers
             return StatusCodes.Status200OK;
         }
 
-        ////Edit
-        //// PUT /api/Semester/edit Postman params és body részébe az adatok
-        //[HttpPut("edit")]
-        //public async Task<int> PutEditSemester(int id, SemesterDto semesterDto)
-        //{
-        //    await _semesterService.PutEditSemester(id, semesterDto);
-        //    return StatusCodes.Status200OK;
-        //}
+        [HttpGet("GetSemesterProjects")]
+        public IEnumerable<ProjectDTO> GetSemesterProjects(int id)
+        {
+            return _semesterService.GetSemesterProjects(id);
+        }
+
+
     }
 }

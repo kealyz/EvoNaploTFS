@@ -6,7 +6,7 @@ import './SemesterPageViewStyle.css'
 
 export default function UserPageView(props) {
     const [semester, setSemester] = useState({});
-    const [comments, setComments] = useState([]);
+    const [projects, setProjects] = useState([]);
 
 
     useEffect(() => {
@@ -15,28 +15,28 @@ export default function UserPageView(props) {
                 .then(response => response.json())
                 .then(json => setSemester(json))
         }
-        /*
+        
         if (props.match.params.id !== undefined) {
-            fetch('api/User/GetStudentComments/?id=' + props.match.params.id)
+            fetch('api/Semester/GetSemesterProjects/?id=' + props.match.params.id)
                 .then(response => response.json())
-                .then(json => setComments(json))
-        }*/
+                .then(json => setProjects(json))
+        }
     }, []);
 
-    function renderComments(c) {
+    function renderProjects(c) {
         return (
             <div>
                 {c.map((row) =>
                     <div class="CommentCard">
                         <div class="CommentHeader">
                             <h5>
-                                {row.commenter}
+                                {row.projectName}
                             </h5>
                         </div>
                         <hr />
                         <div class="CommentContent">
                             <p>
-                                {row.comment}
+                                {row.description}
                             </p>
                         </div>
                     </div>
@@ -56,9 +56,9 @@ export default function UserPageView(props) {
         );
     }
     else {
-        let commentsToRender = comments.length > 0
-            ? renderComments(comments)
-            : <p><em>There are no comments to this semester.</em></p>;
+        let projectsToRender = projects.length > 0
+            ? renderProjects(projects)
+            : <p><em>There are no projets to this semester.</em></p>;
 
         return (
             <div>
@@ -86,7 +86,7 @@ export default function UserPageView(props) {
                         </td>
                     </tr>
                 </table>
-                {commentsToRender}
+                {projectsToRender}
             </div>
         );
     }
