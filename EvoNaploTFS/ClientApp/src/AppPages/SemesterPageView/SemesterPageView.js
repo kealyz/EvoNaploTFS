@@ -2,12 +2,13 @@
 import { useParams } from 'react-router-dom';
 import UserImg from "../../components/Pictures/user.png";
 import './SemesterPageViewStyle.css'
+import ListTable from '../ListTable';
 
 
 export default function UserPageView(props) {
     const [semester, setSemester] = useState({});
     const [projects, setProjects] = useState([]);
-
+    const [q, setQ] = useState("");
 
     useEffect(() => {
         if (props.match.params.id !== undefined) {
@@ -45,6 +46,20 @@ export default function UserPageView(props) {
         );
     }
 
+    function renderSemesterProjects(c) {
+        return (
+            <div>
+                Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
+                <br/>
+                <br />
+                <ListTable data={search(projects)} url={'api/Project'} />
+            </div>
+            );
+    }
+    function search(rows) {
+        return rows.filter(row => row.projectName.toLowerCase().indexOf(q.toLowerCase()) > -1)
+    }
+
     if (Object.keys(semester).length == 0) {
         return (
             <p>Semester not found</p>
@@ -57,7 +72,7 @@ export default function UserPageView(props) {
     }
     else {
         let projectsToRender = projects.length > 0
-            ? renderProjects(projects)
+            ? renderSemesterProjects(projects)
             : <p><em>There are no projets to this semester.</em></p>;
 
         return (
