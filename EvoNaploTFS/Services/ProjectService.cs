@@ -31,8 +31,20 @@ namespace EvoNaploTFS.Services
                 result.Add(new ProjectDTO(project));
             }
             return result;
-
         }
+
+        internal IEnumerable<ProjectDTO> GetProjectsOfCurrentSemseter()
+        {
+            var currentSemesterId = _evoNaploContext.Semesters.Aggregate((i1, i2) => i1.Id > i2.Id ? i1 : i2).Id;
+            var projects = _evoNaploContext.Projects;
+            List<ProjectDTO> result = new List<ProjectDTO>();
+            foreach (var project in projects)
+            {
+                result.Add(new ProjectDTO(project));
+            }
+            return result.Where(project => project.SemesterId == currentSemesterId);
+        }
+
         public ProjectDTO GetProjectById(int id)
         {
             var project = _evoNaploContext.Projects.FirstOrDefault(u => u.Id == id);

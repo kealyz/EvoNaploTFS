@@ -24,6 +24,13 @@ namespace EvoNaploTFS.Controllers
         {
             return _projectService.GetProjects();
         }
+
+        [HttpGet("ProjectsOfCurrentSemester")]
+        public IEnumerable<ProjectDTO> GetProjectsOfCurrentSemester()
+        {
+            return _projectService.GetProjectsOfCurrentSemseter();
+        }
+
         [HttpGet("GetProjectById")]
         public ProjectDTO GetProjectById(int id)
         {
