@@ -1,5 +1,6 @@
 ﻿import React, { Component, useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+/*import axios from 'axios';*/
 
 const studentFieldsArray = [
     {
@@ -49,66 +50,76 @@ export default function SemesterStartAdminPage() {
 
     const [data, setData] = useState([]);
     const [q, setQ] = useState("");
-    const fetchUrl = '/Projects';
-    const columns = data[0] && Object.keys(data[0]);
+    const fetchUrl = '/ProjectsOfCurrentSemester';
+    const [columns, setColumns] = useState([]);
     console.log(data);
 
     useEffect(() => {
-        fetch('api/ProjectsOfCurrentSemester' + fetchUrl)
+        fetch('api/Project' + fetchUrl)
             .then(response => response.json())
-            .then(json => setData(json))
+            .then(json => setData(json));
+        console.log(data);
     }, []);
 
-    return (
-        <div>
-            <h1>Join Semester</h1>
-            <br />
-            <br />
-            <table class="DataListTable">
-                <thead>
-                    <tr>
-                        <th>
-                            Projects
-                        </th>
-                        <th>
-                            Students
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((row) =>
+    if (data.length > 0) {
+        return (
+            <div>
+                <h1>Join Semester</h1>
+                <br />
+                <br />
+                <table class="DataListTable">
+                    <thead>
                         <tr>
-                            {columns.map((column) =>
-                                <td>{row[column]}</td>
-                            )}
+                            <th>
+                                Projects
+                        </th>
+                            <th>
+                                Students
+                        </th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
-            <div style={{ textAlign: 'right' }}>
-                <DragDropContext onDragEnd={handleOnStudentDragEnd}>
-                    <Droppable droppableId="studentFields">
-                        {(provided) => (
-                            <ul className="studentFields" {...provided.droppableProps} ref={provided.innerRef}>
-                                {studentFields.map(({ id, name }, index) => {
-                                    return (
-                                        <Draggable key={id} draggableId={id} index={index}>
-                                            {(provided) => (
-                                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                    <p>
-                                                        {name}
-                                                    </p>
-                                                </li>
-                                            )}
-                                        </Draggable>
-                                    );
-                                })}
-                                {provided.placeholder}
-                            </ul>
+                    </thead>
+                    <tbody>
+                        {data.map((row) => 
+                            <tr>
+                                {<td>
+                                    { row.projectName }
+                                </td>}
+                            </tr>
                         )}
-                    </Droppable>
-                </DragDropContext>
+                    </tbody>
+                </table>
+                <div style={{ textAlign: 'right' }}>
+                    <DragDropContext onDragEnd={handleOnStudentDragEnd}>
+                        <Droppable droppableId="studentFields">
+                            {(provided) => (
+                                <ul className="studentFields" {...provided.droppableProps} ref={provided.innerRef}>
+                                    {studentFields.map(({ id, name }, index) => {
+                                        return (
+                                            <Draggable key={id} draggableId={id} index={index}>
+                                                {(provided) => (
+                                                    <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                        <p>
+                                                            {name}
+                                                        </p>
+                                                    </li>
+                                                )}
+                                            </Draggable>
+                                        );
+                                    })}
+                                    {provided.placeholder}
+                                </ul>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else {
+        return (
+            <h1>
+                Loading...
+            </h1>
+            );
+    }
 }
