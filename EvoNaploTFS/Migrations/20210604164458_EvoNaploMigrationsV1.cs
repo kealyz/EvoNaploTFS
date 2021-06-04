@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EvoNaploTFS.Migrations
 {
-<<<<<<< HEAD:EvoNaploTFS/Migrations/20210531154340_EvonaploV1.cs
-    public partial class EvonaploV1 : Migration
-=======
-    public partial class EvoNaploTFSV1 : Migration
->>>>>>> 99cc9076f3011333663dd7e4fc9068fdd4232252:EvoNaploTFS/Migrations/20210601103832_EvoNaploTFSV1.cs
+    public partial class EvoNaploMigrationsV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

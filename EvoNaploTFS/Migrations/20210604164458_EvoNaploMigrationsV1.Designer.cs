@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvoNaploTFS.Migrations
 {
     [DbContext(typeof(EvoNaploContext))]
-<<<<<<< HEAD:EvoNaploTFS/Migrations/20210531154340_EvonaploV1.Designer.cs
-    [Migration("20210531154340_EvonaploV1")]
-    partial class EvonaploV1
-=======
-    [Migration("20210601103832_EvoNaploTFSV1")]
-    partial class EvoNaploTFSV1
->>>>>>> 99cc9076f3011333663dd7e4fc9068fdd4232252:EvoNaploTFS/Migrations/20210601103832_EvoNaploTFSV1.Designer.cs
+    [Migration("20210604164458_EvoNaploMigrationsV1")]
+    partial class EvoNaploMigrationsV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
