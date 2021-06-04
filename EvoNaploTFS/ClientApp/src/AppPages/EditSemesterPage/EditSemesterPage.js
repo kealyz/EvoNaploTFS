@@ -5,7 +5,8 @@ export default function EditUserPage(props) {
     const [semester, setSemester] = useState({
         id: '',
         startDate: '',
-        endDate: ''
+        endDate: '',
+        isAppliable: ''
     });
 
     const [errors, setErrors] = useState({});
@@ -15,7 +16,7 @@ export default function EditUserPage(props) {
         if (props.match.params.id !== undefined) {
             fetch('api/Semester/GetSemesterToEditById/?id=' + props.match.params.id)
                 .then(response => response.json())
-                .then(json => setSemester({ id: json.id, startDate: json.startDate, endDate: json.endDate }))       
+                .then(json => setSemester({ id: json.id, startDate: json.startDate, endDate: json.endDate, isAppliable: json.isAppliable }))       
         }
     }, []);
 
@@ -65,6 +66,12 @@ export default function EditUserPage(props) {
                         <td>
                             <input type="text" name="endDate" value={semester.endDate} placeholder="endDate" onChange={handleChange} />
                             {errors.endDate && <p class="ErrorParagraph">{errors.endDate}</p>}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
+                            {errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p>}
                         </td>
                     </tr>
                 </table>

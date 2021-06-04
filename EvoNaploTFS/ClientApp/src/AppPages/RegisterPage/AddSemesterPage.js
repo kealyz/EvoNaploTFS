@@ -7,7 +7,8 @@ import EditSemesterValidate from '../EditSemesterPage/EditSemesterValidate'
 const AddSemesterPage = () => {
     const [semester, setSemester] = useState({
         startDate: '',
-        endDate: ''
+        endDate: '',
+        isAppliable: ''
     });
 
     const [errors, setErrors] = useState({});
@@ -28,6 +29,7 @@ const AddSemesterPage = () => {
         setErrors(returnedErrors);
 
         if (Object.keys(returnedErrors).length == 0) {
+            console.log(JSON.stringify(semester));
             fetch('api/Semester/AddSemester', { method: 'POST', body: JSON.stringify(semester), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
@@ -61,13 +63,20 @@ const AddSemesterPage = () => {
                             {errors.endDate && <p class="ErrorParagraph">{errors.endDate}</p>}
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
+                            {errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p>}
+                        </td>
+                    </tr>
                 </table>
                 <input type="submit" />
             </form>
-            {success && <p class="SuccessParagraph">Semester {semester.startdate} : {semester.enddate} successfully added.</p>}
-            <form class="AddSemesterButton" action="/Semesters" style={{ textAlign: 'right' }}>
-                <input type="submit" value="Semester Page" />
-            </form>
+            {success && <p class="SuccessParagraph">Semester {semester.startDate} : {semester.endDate} successfully added.</p>}
+            <a href="/Semesters" class="joffan">
+                Back
+             </a>
+            
         </div>
     );
 }

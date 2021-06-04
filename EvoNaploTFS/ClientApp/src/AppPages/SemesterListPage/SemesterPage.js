@@ -14,6 +14,7 @@ export default function StudentsPage() {
         fetch('api/Semester' + fetchUrl)
             .then(response => response.json())
             .then(json => setData(json))
+            //.then(json => console.log(json))
     }, []);
 
     
@@ -24,9 +25,9 @@ export default function StudentsPage() {
     return (
         <div>
             Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
-            <form class="AddSemesterButton" action="/AddSemesterPage" style={{ textAlign: 'right' }}>
-                <input type="submit" value="Add Semester" />
-            </form>
+            <a href="/AddSemesterPage" style={{ float: 'right' }}>
+                <input type="button" value="Add Semester" />
+            </a>
             <br />
             <br />
             <ListTable data={search(data)} url={'api/Semester'} />

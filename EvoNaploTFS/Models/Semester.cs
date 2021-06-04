@@ -12,17 +12,18 @@ namespace EvoNaploTFS.Models
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public bool IsAppliable { get; set; }
 
 
         public Semester()
         {
-
         }
         public Semester(Semester semester)
         {
             Id = semester.Id;
             StartDate = semester.StartDate;
             EndDate = semester.EndDate;
+            IsAppliable = semester.IsAppliable;
         }
     }
 }

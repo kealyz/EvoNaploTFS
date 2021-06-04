@@ -5,7 +5,10 @@
         errors.startDate = "startDate required";
     }
     if (!values.endDate) {
-        errors.endDate = "startDate required";
+        errors.endDate = "endDate required";
+    }
+    if (!values.isAppliable) {
+        errors.isAppliable = "isAppliable required";
     }
 
     return errors;

@@ -21,8 +21,7 @@ namespace EvoNaplo.Services
         }
         public async Task<IEnumerable<Semester>> AddSemester(Semester semester)
         {
-
-            await _evoNaploContext.Semesters.AddAsync(new Semester(semester));
+            await _evoNaploContext.Semesters.AddAsync(semester);
             _evoNaploContext.SaveChanges();
             return _evoNaploContext.Semesters.ToList();
         }
