@@ -51,6 +51,12 @@ export class NavMenu extends Component {
                                 <NavItem>
                                     <NavLink tag={Link} className="text-light" to="/Semesters">Semesters</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-light" to="/JoinSemester">Join Semester</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-light" to="/StartSemester">Start Semester</NavLink>
+                                </NavItem>
                             </ul>
                         </Collapse>
                     </Container>
