@@ -78,9 +78,9 @@ const AddSemesterPage = () => {
                         <td>
                             {/*<input type="checkbox" name="isAppliable" value="ture" onChange={handleChange} />*/}
                             <label >isAppliable</label><br />
-                            <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} />
+                            <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} checked={semester.isAppliable === true} />
                             <label for="isAppliableTrue">True</label><br />
-                            <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} />
+                            <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} checked={semester.isAppliable === false} />
                             <label for="isAppliableFalse">False</label><br/>
                         </td>
                     </tr>
