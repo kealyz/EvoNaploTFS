@@ -1,10 +1,6 @@
 ﻿using EvoNaplo.DataAccessLayer;
 using EvoNaploTFS.Models;
 using EvoNaploTFS.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,6 +60,7 @@ namespace EvoNaplo.Services
             var SemesterToEdit = await _evoNaploContext.Semesters.FindAsync(semester.Id);
             SemesterToEdit.StartDate = semester.StartDate;
             SemesterToEdit.EndDate = semester.EndDate;
+            SemesterToEdit.IsAppliable = semester.IsAppliable;
             _evoNaploContext.SaveChanges();
             return _evoNaploContext.Semesters.ToList();
         }

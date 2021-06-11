@@ -5,11 +5,13 @@ import EditSemesterValidate from '../EditSemesterPage/EditSemesterValidate'
 
 
 const AddSemesterPage = () => {
+
     const [semester, setSemester] = useState({
         startDate: '',
         endDate: '',
-        isAppliable: ''
+        isAppliable: false
     });
+
 
     const [errors, setErrors] = useState({});
 
@@ -20,7 +22,15 @@ const AddSemesterPage = () => {
             ...semester,
             [e.target.name]: e.target.value
         });
+        if (e.target.name === "isAppliable") {
+            setSemester({
+                ...semester,
+                [e.target.name]: e.currentTarget.value === 'true' ? true : false
+            })
+        }
+        console.log(semester);
     }
+    //{"startDate": "2088-01-01T00:00:00", "endDate": "2088-01-01T00:00:00", "isAppliable": true}
 
     const onSubmit = e => {
         e.preventDefault()
@@ -29,7 +39,8 @@ const AddSemesterPage = () => {
         setErrors(returnedErrors);
 
         if (Object.keys(returnedErrors).length == 0) {
-            console.log(JSON.stringify(semester));
+           
+            console.log(semester);
             fetch('api/Semester/AddSemester', { method: 'POST', body: JSON.stringify(semester), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
@@ -65,8 +76,12 @@ const AddSemesterPage = () => {
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
-                            {errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p>}
+                            {/*<input type="checkbox" name="isAppliable" value="ture" onChange={handleChange} />*/}
+                            <label >isAppliable</label><br />
+                            <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} />
+                            <label for="isAppliableTrue">True</label><br />
+                            <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} />
+                            <label for="isAppliableFalse">False</label><br/>
                         </td>
                     </tr>
                 </table>
@@ -80,5 +95,7 @@ const AddSemesterPage = () => {
         </div>
     );
 }
-
+//<input type="checkbox" name="isAppliable" value={semester.isAppliable} onChange={handleChange} />
+//<input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
+//{ errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p> }
 export default AddSemesterPage;

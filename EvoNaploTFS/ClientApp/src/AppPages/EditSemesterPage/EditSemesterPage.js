@@ -16,7 +16,7 @@ export default function EditUserPage(props) {
         if (props.match.params.id !== undefined) {
             fetch('api/Semester/GetSemesterToEditById/?id=' + props.match.params.id)
                 .then(response => response.json())
-                .then(json => setSemester({ id: json.id, startDate: json.startDate, endDate: json.endDate, isAppliable: json.isAppliable }))       
+                .then(json => setSemester({ id: json.id, startDate: json.startDate, endDate: json.endDate, isAppliable: json.isAppliable }))
         }
     }, []);
 
@@ -25,6 +25,13 @@ export default function EditUserPage(props) {
             ...semester,
             [e.target.name]: e.target.value
         });
+        if (e.target.name === "isAppliable") {
+            setSemester({
+                ...semester,
+                [e.target.name]: e.currentTarget.value === 'true' ? true : false
+            })
+        }
+        console.log(semester);
     }
 
     const onSubmit = e => {
@@ -50,7 +57,6 @@ export default function EditUserPage(props) {
 
     return (
         /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-
         <div class="DivCard">
             <h1>Edit</h1>
             <form onSubmit={onSubmit} id="editForm">
@@ -70,14 +76,21 @@ export default function EditUserPage(props) {
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
-                            {errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p>}
+
+                            <label >isAppliable</label><br />
+                            <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} checked={semester.isAppliable === true} />
+                            <label for="isAppliableTrue">True</label><br />
+                            <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} checked={semester.isAppliable === false} />
+                            <label for="isAppliableFalse">False</label><br />
                         </td>
                     </tr>
                 </table>
                 <input type="submit" />
             </form>
             {success && <p class="SuccessParagraph">User {semester.startDate} successfully edited.</p>}
+            <a href="/Semesters" class="joffan">
+                Back
+             </a>
         </div>
     );
 }

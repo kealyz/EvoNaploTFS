@@ -24,6 +24,12 @@ namespace EvoNaploTFS.Models.DTO
             EndDate = semester.EndDate;
             IsAppliable = semester.IsAppliable ? "Active" : "Inactive";
         }
-
+        public SemesterDTO(SemesterDTO semesterDTO)
+        {
+            Id = semesterDTO.Id;
+            StartDate = semesterDTO.StartDate;
+            EndDate = semesterDTO.EndDate;
+            IsAppliable = semesterDTO.IsAppliable;
+        }
     }
 }
