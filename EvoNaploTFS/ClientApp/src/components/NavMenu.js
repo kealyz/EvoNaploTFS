@@ -4,6 +4,24 @@ import { Link } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu/DropdownMenu';
 import './NavMenu.css';
 
+function GetLists() {
+    return (
+        <div>
+            <ul>
+                <li>
+                    <a href="/Students">Students</a>
+                </li>
+                <li>
+                    <a href="/Mentors">Mentors</a>
+                </li>
+                <li>
+                    <a href="/Projects">Projects</a>
+                </li>
+            </ul>
+        </div>
+    );
+}
+
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
 
@@ -22,16 +40,6 @@ export class NavMenu extends Component {
         });
     }
 
-    GetLists() {
-        return (
-            <div>
-                <a href="/Students">Students</a>
-                <a href="/Mentors">Mentors</a>
-                <a href="/Projects">Projects</a>
-            </div>
-        );
-    }
-
     render() {
         return (
             <header>
@@ -45,13 +53,7 @@ export class NavMenu extends Component {
                                     <NavLink tag={Link} className="text-light" to="/">Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-light" to="/Students">Students</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-light" to="/Mentors">Mentors</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-light" to="/Projects">Projects</NavLink>
+                                    <DropdownMenu title="Lists" content={GetLists()} />
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={Link} className="text-light" to="/Register">Register</NavLink>
@@ -67,9 +69,6 @@ export class NavMenu extends Component {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={Link} className="text-light" to="/StartSemester">Start Semester</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <DropdownMenu title="Dropdown" content={this.GetLists} />
                                 </NavItem>
                             </ul>
                         </Collapse>

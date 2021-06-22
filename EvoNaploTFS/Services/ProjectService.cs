@@ -36,7 +36,7 @@ namespace EvoNaploTFS.Services
         internal IEnumerable<ProjectDTO> GetProjectsOfCurrentSemseter()
         {
             var semesterList = _evoNaploContext.Semesters.ToList();
-            var currentSemester = semesterList.OrderByDescending(semester => semester.Id).First();
+            var currentSemester = semesterList.OrderByDescending(semester => semester.Id).FirstOrDefault();
             var currentSemesterId = currentSemester.Id;
             var projects = _evoNaploContext.Projects.ToList();
             List<ProjectDTO> result = new List<ProjectDTO>();
