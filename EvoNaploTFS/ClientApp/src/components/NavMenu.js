@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import DropdownMenu from './DropdownMenu/DropdownMenu';
 import './NavMenu.css';
 
 export class NavMenu extends Component {
@@ -19,6 +20,16 @@ export class NavMenu extends Component {
         this.setState({
             collapsed: !this.state.collapsed
         });
+    }
+
+    GetLists() {
+        return (
+            <div>
+                <a href="/Students">Students</a>
+                <a href="/Mentors">Mentors</a>
+                <a href="/Projects">Projects</a>
+            </div>
+        );
     }
 
     render() {
@@ -56,6 +67,9 @@ export class NavMenu extends Component {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={Link} className="text-light" to="/StartSemester">Start Semester</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <DropdownMenu title="Dropdown" content={this.GetLists} />
                                 </NavItem>
                             </ul>
                         </Collapse>
