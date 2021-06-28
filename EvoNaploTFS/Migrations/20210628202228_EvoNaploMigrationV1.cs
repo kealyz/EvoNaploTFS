@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EvoNaploTFS.Migrations
 {
-    public partial class EvoNaploMigrationsV1 : Migration
+    public partial class EvoNaploMigrationV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

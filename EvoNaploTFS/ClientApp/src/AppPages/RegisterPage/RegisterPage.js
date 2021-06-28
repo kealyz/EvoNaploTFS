@@ -3,6 +3,9 @@
 import '../Forms.css';
 import validate from "../RegisterPage/RegisterValidate";
 
+//const bcrypt = require('bcrypt');
+//const saltRounds = 10;
+
 
 const RegisterPage = () => {
     const [user, setUser] = useState({
@@ -29,9 +32,14 @@ const RegisterPage = () => {
 
         const returnedErrors = validate(user);
         setErrors(returnedErrors);
+        const hashedPass = "";
 
         if (Object.keys(returnedErrors).length == 0) {
-            fetch('api/Student/AddStudent', { method: 'POST', body: JSON.stringify(user), headers: { "Content-Type": "application/json" } })
+            //bcrypt.hash(user.password, saltRounds).then(function (hash) {
+            //    hashedPass = hash;
+            //});
+            console.log([user.firstname, user.lastname, user.email, hashedPass]);
+            fetch('api/Student/AddStudent', { method: 'POST', body: JSON.stringify([user.firstname, user.lastname, user.email, hashedPass]), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
                 })
@@ -45,7 +53,6 @@ const RegisterPage = () => {
         }
 
     }
-
 
     return (
         /* "handleSubmit" will validate your inputs before invoking "onSubmit" */

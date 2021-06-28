@@ -21,3 +21,20 @@ html {
 {
     background-color: limegreen;
 }
+
+.NavLinkFonts {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    color: #f8f9fa !important;
+}
+.nav-item
+{
+    margin-top: 0px !important;
+    outline: none;
+}
+    .nav-item:hover {
+        background-color: rgb(40, 195, 40);
+    }
+    .nav-item:active {
+        border: none;
+    }

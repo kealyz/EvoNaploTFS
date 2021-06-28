@@ -27,14 +27,6 @@ function RemoveContent(row, url) {
     window.location.reload(false);
 }
 
-function EditContent(row, url) {
-    alert("Edit data with id [" + row + "] (" + url + ")");
-}
-
-function ViewContent(row, url) {
-    alert("Edit data with id [" + row + "] (" + url + ")");
-}
-
 export default function RenderTable(props) {
     const columns = props.data[0] && Object.keys(props.data[0]);
     const [height, width] = useWindowSize();
@@ -66,7 +58,7 @@ export default function RenderTable(props) {
                 <table class="DataListTable">
                     <thead>
                         <tr>
-                            {props.data[0] && columns.map((heading) => <th>{heading}</th>)}
+                            {props.headings ? props.headings.map((heading) => <th>{heading}</th>) : null}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -78,10 +70,10 @@ export default function RenderTable(props) {
                                 )}
                                 <td>
                                     <a href={pageViewURL + row.id}>
-                                        <BsEye className="ActionIcon ViewIcon" onClick={() => ViewContent(row.id, props.url)} />
+                                        <BsEye className="ActionIcon ViewIcon"/>
                                     </a>
                                     <a href={editPageURL + row.id}>
-                                        <BsPencil class="ActionIcon EditIcon" onClick={() => EditContent(row.id, props.url)} />
+                                        <BsPencil class="ActionIcon EditIcon"/>
                                     </a>
                                     <BsTrashFill class="ActionIcon RemoveIcon" onClick={() => RemoveContent(row.id, props.url)} />
                                 </td>

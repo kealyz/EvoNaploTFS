@@ -25,7 +25,7 @@ export default function ProjectsPage() {
             Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
             <br/>
             <br/>
-            <ListTable data={search(data)} url={'api/Project'} />
+            <ListTable data={search(data)} headings={["Id","Project name","Description","Source link","Technologies","Semester Id"]} url={'api/Project'} />
         </div>
     );
 }

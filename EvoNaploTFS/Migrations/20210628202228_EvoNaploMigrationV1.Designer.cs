@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvoNaploTFS.Migrations
 {
     [DbContext(typeof(EvoNaploContext))]
-    [Migration("20210604164458_EvoNaploMigrationsV1")]
-    partial class EvoNaploMigrationsV1
+    [Migration("20210628202228_EvoNaploMigrationV1")]
+    partial class EvoNaploMigrationV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EvoNaploTFS.Models.AttendanceSheet", b =>

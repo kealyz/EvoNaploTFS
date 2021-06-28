@@ -50,15 +50,31 @@ export default function SemesterStartAdminPage() {
 
     const [data, setData] = useState([]);
     const [q, setQ] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const fetchUrl = '/ProjectsOfCurrentSemester';
     const [columns, setColumns] = useState([]);
-    console.log(data);
 
     useEffect(() => {
+        setIsLoading((state) => {
+            console.log(state);
+
+            return state;
+        });
+        setIsLoading(true);
+        setIsLoading((state) => {
+            console.log(state);
+
+            return state;
+        });
         fetch('api/Project' + fetchUrl)
             .then(response => response.json())
-            .then(json => setData(json));
-        console.log(data);
+            .then(json => setData(json))
+            .then(setIsLoading(false));
+        setIsLoading((state) => {
+            console.log(state);
+
+            return state;
+        });
     }, []);
 
     if (data.length > 0) {
@@ -79,10 +95,10 @@ export default function SemesterStartAdminPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((row) => 
+                        {data.map((row) =>
                             <tr>
                                 {<td>
-                                    { row.projectName }
+                                    {row.projectName}
                                 </td>}
                             </tr>
                         )}
@@ -115,11 +131,18 @@ export default function SemesterStartAdminPage() {
             </div>
         );
     }
+    else if (isLoading === false) {
+        return (
+            <h1>
+                No data found.
+            </h1>
+        );
+    }
     else {
         return (
             <h1>
                 Loading...
             </h1>
-            );
+        );
     }
 }

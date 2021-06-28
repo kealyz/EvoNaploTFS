@@ -1,45 +1,23 @@
 ﻿@import url("https://fonts.googleapis.com/css?family=Roboto:400,600&display=swap");
 
-/* Style the Dropdownmenu section */
-.Dropdownmenu {
-    display: block;
-}
-
-.Dropdownmenu p {
-    margin: 0 0;
-}
-
 /* Style the buttons that are used to open and close the Dropdownmenu panel */
 .Dropdownmenu {
     background-color: transparent;
     color: #f8f9fa;
     cursor: pointer;
-    padding: 5px;
+    padding: 8px;
     align-items: center;
-    border: none;
-    outline: none !important;
-    transition: background-color 0.6s ease;
     vertical-align: middle;
     position: relative;
     min-width: 100px;
+    display:inline-block;
 }
-    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-    .Dropdownmenu:hover,
-    .active {
-        outline: none;
-        background-color: #32CD32 !important;
-    }
 
 /* Style the Dropdownmenu content title */
 .DropdownmenuTitle {
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-}
-
-/* Style the Dropdownmenu chevron icon */
-.Dropdownmenu__icon {
-    margin-left: auto;
-    transition: transform 0.6s ease;
+    text-align: center;
 }
 
 /* Style the Dropdownmenu content panel. Note: hidden by default */
@@ -48,11 +26,34 @@
     overflow: hidden;
     position: absolute;
     transition: max-height 0.3s ease;
+    min-width: 100px;
     box-shadow: 0px 0px 4px #000000;
+    display: none;
+    margin-top: 8px;
+    margin-left: -8px;
 }
+.Dropdownmenu:hover .DropdownmenuContent {
+    display: block;
+}
+
     .DropdownmenuContent ul {
-        min-width: 100px;
         list-style-type: none;
-        padding-left: 5px;
+        padding-left: 15px;
         margin: 0;
     }
+
+    .DropdownmenuContent a {
+        text-decoration: none !important;
+        color: rgba(0,0,0,0.7);
+    }
+
+        .DropdownmenuContent a:hover .LinkSelector {
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid green;
+            position: absolute;
+            margin-left: -10px;
+            margin-top: 5px;
+        }

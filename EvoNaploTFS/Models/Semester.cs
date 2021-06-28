@@ -18,6 +18,7 @@ namespace EvoNaploTFS.Models
 
         public Semester()
         {
+            Id = -1;
         }
         public Semester(Semester semester)
         {

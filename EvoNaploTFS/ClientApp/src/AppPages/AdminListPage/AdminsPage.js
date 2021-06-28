@@ -24,7 +24,7 @@ export default function AdminsPage() {
             Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
             <br />
             <br />
-            <ListTable data={search(data)} url={'api/User'} />
+            <ListTable data={search(data)} headings={["Id","Name","Activity","Email","Phone"]} url={'api/User'} />
         </div>
     );
 }

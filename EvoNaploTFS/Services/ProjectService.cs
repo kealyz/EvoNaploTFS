@@ -37,6 +37,10 @@ namespace EvoNaploTFS.Services
         {
             var semesterList = _evoNaploContext.Semesters.ToList();
             var currentSemester = semesterList.OrderByDescending(semester => semester.Id).FirstOrDefault();
+            if(currentSemester == null)
+            {
+                return new List<ProjectDTO>();
+            }
             var currentSemesterId = currentSemester.Id;
             var projects = _evoNaploContext.Projects.ToList();
             List<ProjectDTO> result = new List<ProjectDTO>();
