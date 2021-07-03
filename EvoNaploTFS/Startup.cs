@@ -1,5 +1,6 @@
 using EvoNaplo.DataAccessLayer;
 using EvoNaplo.Services;
+using EvoNaploTFS.Helpers;
 using EvoNaploTFS.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,8 @@ namespace EvoNaploTFS
             services.AddScoped<AdminService>();
             services.AddScoped<UserService>();
             services.AddScoped<ProjectService>();
+            services.AddScoped<LoginService>();
+            services.AddScoped<JwtService>();
             ////I hope this is the dependency injection part -marci
             //services.AddScoped<PasswordService>();
             //services.AddScoped<LoginService>();

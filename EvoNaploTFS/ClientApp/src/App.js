@@ -19,6 +19,7 @@ import ProjectPageView from './AppPages/ProjectPageView/ProjectPageView';
 import EditProjectsPage from './AppPages/EditProjectsPage/EditProjectsPage';
 import SemesterStartStudentPage from './AppPages/SemesterStartPage/SemesterStartStudentPage';
 import SemesterStartAdminPage from './AppPages/SemesterStartPage/SemesterStartAdminPage';
+import LoginPage from './AppPages/LoginPage/LoginPage';
 
 
 import './custom.css'
@@ -49,6 +50,7 @@ export default class App extends Component {
                 <Route path='/EditProjectsPage/:id' component={EditProjectsPage} />
                 <Route path='/JoinSemester' component={SemesterStartStudentPage} />
                 <Route path='/StartSemester' component={SemesterStartAdminPage} />
+                <Route path='/LoginPage' component={LoginPage} />
             </Layout>
         );
     }

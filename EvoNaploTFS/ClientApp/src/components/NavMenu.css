@@ -31,7 +31,14 @@ html {
 {
     margin-top: 0px !important;
     outline: none;
+    min-width: 100px;
+    text-align: center;
+    
+    border-right: 2px solid rgba(0,0,0,0.1);
 }
+    .nav-item:first-child {
+        border-left: 2px solid rgba(0,0,0,0.1);
+    }
     .nav-item:hover {
         background-color: rgb(40, 195, 40);
     }

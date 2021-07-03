@@ -10,8 +10,17 @@ export default function Login() {
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = e => {
+        e.preventDefault()
 
+
+        fetch('api/Auth/Login', { method: 'POST', body: JSON.stringify(user), headers: { "Content-Type": "application/json" } })
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (
