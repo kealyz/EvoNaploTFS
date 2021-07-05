@@ -47,8 +47,14 @@ const Container = styled.div`
 //}
 
 export default function SemesterStartStudentPage() {
-    const [projectFields, updateprojectFields] = useState(initialData);
+    const [projectFields, updateprojectFields] = useState({});
     /*const [height, width] = useWindowSize();*/
+
+    useEffect(() => {
+        fetch('api/ProjectStudent/ProjectsStudents')
+            .then(response => response.json())
+            .then(json => updateprojectFields(json))
+    }, []);
 
     function handleOnDragEnd(result) {
         const { destination, source, draggableId } = result;
@@ -64,8 +70,8 @@ export default function SemesterStartStudentPage() {
             return;
         }
 
-        const start = projectFields.columns[source.droppableId];
-        const finish = projectFields.columns[destination.droppableId];
+        const start = projectFields.columnProjects[source.droppableId];
+        const finish = projectFields.columnProjects[destination.droppableId];
 
         if (start === finish) {
             const newTaskIds = Array.from(start.taskIds);
@@ -79,8 +85,8 @@ export default function SemesterStartStudentPage() {
 
             const newState = {
                 ...projectFields,
-                columns: {
-                    ...projectFields.columns,
+                columnProjects: {
+                    ...projectFields.columnProjects,
                     [newColumn.id]: newColumn,
                 },
             };
@@ -106,8 +112,8 @@ export default function SemesterStartStudentPage() {
 
         const newState = {
             ...projectFields,
-            columns: {
-                ...projectFields.columns,
+            columnProjects: {
+                ...projectFields.columnProjects,
                 [newStart.id]: newStart,
                 [newFinish.id]: newFinish,
             },
@@ -119,9 +125,9 @@ export default function SemesterStartStudentPage() {
         <DragDropContext onDragEnd={handleOnDragEnd}>
             <Container>
                 {projectFields.columnOrder.map(columnId => {
-                    const column = projectFields.columns[columnId];
-                    const tasks = column.taskIds.map(
-                        taskId => projectFields.tasks[taskId],
+                    const column = projectFields.columnProjects[columnId];
+                    const tasks = column.projectStudentIds.map(
+                        taskId => projectFields.projectStudents[taskId],
                     );
 
                     return <Column key={column.id} column={column} tasks={tasks} />;
