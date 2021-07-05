@@ -56,7 +56,7 @@ namespace EvoNaploTFS.Controllers
         }
 
         [HttpGet("User")]
-        public IActionResult GetUser()
+        public IActionResult GetRole()
         {
             try
             {

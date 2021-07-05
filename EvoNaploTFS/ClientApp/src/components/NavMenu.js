@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu/DropdownMenu';
@@ -25,53 +25,111 @@ function GetLists() {
     );
 }
 
-export class NavMenu extends Component {
-    static displayName = NavMenu.name;
+export default function NavMenu(props) {
 
-    constructor(props) {
-        super(props);
+    const [collapsed, setCollapsed] = useState(true);
 
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.state = {
-            collapsed: true
-        };
+    function toggleNavbar() {
+        setCollapsed(!collapsed);
     }
 
-    toggleNavbar() {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
+    function getNavBar() {
+        if ('role' in props.session) {
+            return (
+                <ul className="navbar-nav flex-grow">
+                    <NavItem>
+                        <NavLink tag={Link} className="NavLinkFonts" to="/">Home</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <DropdownMenu title="Lists" content={GetLists()} />
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="NavLinkFonts" to="/StartSemester">Start Semester</NavLink>
+                    </NavItem>
+                </ul>
+            );
+        }
+        else {
+            return (
+                <ul className="navbar-nav flex-grow">
+                    <NavItem>
+                        <NavLink tag={Link} className="NavLinkFonts" to="/LoginPage">Login</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="NavLinkFonts" to="/Registration">Registration</NavLink>
+                    </NavItem>
+                </ul>
+            );
+        }
     }
 
-    render() {
-        return (
-            <header>
-                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 NavMenuColor" light>
-                    <Container>
-                        <NavbarBrand tag={Link} className="NavLinkFonts" to="/">EvoNaploTFS</NavbarBrand>
-                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-                            <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="NavLinkFonts" to="/">Home</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <DropdownMenu title="Lists" content={GetLists()} />
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="NavLinkFonts" to="/Register">Registration</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="NavLinkFonts" to="/StartSemester">Start Semester</NavLink>
-                                </NavItem>
-                            </ul>
-                        </Collapse>
-                    </Container>
-                </Navbar>
-            </header>
-        );
-    }
+    let navBar = getNavBar();
+    return (
+        <header>
+            <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 NavMenuColor" light>
+                <Container>
+                    <NavbarBrand tag={Link} className="NavLinkFonts" to="/">EvoNaploTFS</NavbarBrand>
+                    <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+                    <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={collapsed} navbar>
+                        {navBar}
+                    </Collapse>
+                </Container>
+            </Navbar>
+        </header>
+    );
+
 }
+
+//export class NavMenu extends Component {
+//    static displayName = NavMenu.name;
+
+//    constructor(props) {
+//        super(props);
+
+//        this.toggleNavbar = this.toggleNavbar.bind(this);
+//        this.state = {
+//            collapsed: true
+//        };
+//    }
+
+//    toggleNavbar() {
+//        this.setState({
+//            collapsed: !this.state.collapsed
+//        });
+//    }
+
+//    render() {
+//        return (
+//            <header>
+//                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 NavMenuColor" light>
+//                    <Container>
+//                        <NavbarBrand tag={Link} className="NavLinkFonts" to="/">EvoNaploTFS</NavbarBrand>
+//                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+//                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+//                            <ul className="navbar-nav flex-grow">
+//                                <NavItem>
+//                                    <NavLink tag={Link} className="NavLinkFonts" to="/">Home</NavLink>
+//                                </NavItem>
+//                                <NavItem>
+//                                    <DropdownMenu title="Lists" content={GetLists()} />
+//                                </NavItem>
+//                                <NavItem>
+//                                    <NavLink tag={Link} className="NavLinkFonts" to="/Register">Registration</NavLink>
+//                                </NavItem>
+//                                <NavItem>
+//                                    <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
+//                                </NavItem>
+//                                <NavItem>
+//                                    <NavLink tag={Link} className="NavLinkFonts" to="/StartSemester">Start Semester</NavLink>
+//                                </NavItem>
+//                            </ul>
+//                        </Collapse>
+//                    </Container>
+//                </Navbar>
+//            </header>
+//        );
+//    }
+//}

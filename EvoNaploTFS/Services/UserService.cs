@@ -113,5 +113,19 @@ namespace EvoNaploTFS.Services
             var students = _evoNaploContext.Users.Where(m => m.Role == role);
             return students.ToList();
         }
+
+        public int GetRoleByUserId(int id)
+        {
+            var user = _evoNaploContext.Users.FirstOrDefault(u => u.Id == id);
+
+            if(user != null)
+            {
+                return (int)user.Role;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 }

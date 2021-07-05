@@ -1,4 +1,5 @@
 ﻿import React, { Component, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 
 export default function Login() {
     const [user, setUser] = useState({});
@@ -11,12 +12,13 @@ export default function Login() {
     }
 
     const handleSubmit = e => {
-        e.preventDefault()
-
+        e.preventDefault();
 
         fetch('api/Auth/Login', { method: 'POST', body: JSON.stringify(user), headers: { "Content-Type": "application/json" } })
             .then(function (data) {
                 console.log(data);
+
+                window.location.reload(true);
             })
             .catch(function (error) {
                 console.log(error);
