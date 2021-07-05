@@ -2,6 +2,7 @@
 using EvoNaploTFS.Helpers;
 using EvoNaploTFS.Models;
 using EvoNaploTFS.Models.DTO;
+using EvoNaploTFS.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,11 +18,13 @@ namespace EvoNaploTFS.Controllers
     {
         private readonly LoginService loginService;
         private readonly JwtService jwtService;
+        private readonly UserService userService;
 
-        public AuthController(LoginService service, JwtService jwt)
+        public AuthController(LoginService _loginService, JwtService _jwtService, UserService _userService)
         {
-            loginService = service;
-            jwtService = jwt;
+            loginService = _loginService;
+            jwtService = _jwtService;
+            userService = _userService;
         }
 
         [HttpPost("Login")]
@@ -36,9 +39,14 @@ namespace EvoNaploTFS.Controllers
             if (BCrypt.Net.BCrypt.Verify(loginDTO.password, user.Password))
             {
                 var jwt = jwtService.GenerateToken(user.Id);
+
+                Response.Cookies.Append("jwt", jwt, new CookieOptions
+                {
+                    HttpOnly = true
+                });
                 return Ok(new
                 {
-                    jwt
+                    message="success"
                 });
             }
             else
@@ -47,10 +55,37 @@ namespace EvoNaploTFS.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Getting()
+        [HttpGet("User")]
+        public IActionResult GetUser()
         {
-            return Ok(new { message = "Muxik" });
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = jwtService.Verify(jwt);
+
+                int userId = int.Parse(token.Issuer);
+
+                var user = userService.GetUserById(userId);
+
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost("Logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+
+            return Ok(new
+            {
+                message = "successfully logged out"
+            });
         }
     }
 }
