@@ -10,51 +10,31 @@ const Container = styled.div`
   display: flex;
 `;
 
-//const projectFieldsArray = [
-//    {
-//        id: '1',
-//        name: 'EvoSavanna'
-//    },
-//    {
-//        id: '2',
-//        name: 'EvoCemetary'
-//    },
-//    {
-//        id: '3',
-//        name: 'EvoBoi'
-//    },
-//    {
-//        id: '4',
-//        name: 'EvoProject2'
-//    },
-//    {
-//        id: '5',
-//        name: 'EvoProjectPlus'
-//    }
-//]
-
-//function useWindowSize() {
-//    const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
-
-//    useEffect(() => {
-//        const handleResize = () => {
-//            setSize([window.innerHeight, window.innerWidth]);
-//        };
-//        window.addEventListener("resize", handleResize);
-//    }, []);
-
-//    return size;
-//}
-
 export default function SemesterStartStudentPage() {
     const [projectFields, updateprojectFields] = useState({});
-    /*const [height, width] = useWindowSize();*/
+    const [studentProjectToEdit, setStudentProjectToEdit] = useState();
 
     useEffect(() => {
         fetch('api/ProjectStudent/ProjectsStudents')
             .then(response => response.json())
             .then(json => updateprojectFields(json))
     }, []);
+
+    useEffect(() => {
+        console.log(projectFields);
+    }, [projectFields]);
+
+    useEffect(() => {
+        if (studentProjectToEdit !== undefined) {
+            fetch('api/ProjectStudent/ProjectsStudentsChanged', { method: 'PUT', body: JSON.stringify(studentProjectToEdit), headers: { "Content-Type": "application/json" } })
+                .then(function (data) {
+                    //setSuccess(true);
+                })
+                .catch(function (error) {
+                    //setSuccess(false);
+                });
+        }
+    }, [studentProjectToEdit]);
 
     function handleOnDragEnd(result) {
         const { destination, source, draggableId } = result;
@@ -70,142 +50,83 @@ export default function SemesterStartStudentPage() {
             return;
         }
 
-        const start = projectFields.columnProjects[source.droppableId];
-        const finish = projectFields.columnProjects[destination.droppableId];
+        const start = projectFields.columnProjects[source.droppableId - 1];
+        const finish = projectFields.columnProjects[destination.droppableId - 1];
 
         if (start === finish) {
-            const newTaskIds = Array.from(start.taskIds);
-            newTaskIds.splice(source.index, 1);
-            newTaskIds.splice(destination.index, 0, draggableId);
+            //const newTaskIds = Array.from(start.columnProjects);
+            //newTaskIds.splice(source.index, 1);
+            //newTaskIds.splice(destination.index, 0, draggableId);
 
-            const newColumn = {
-                ...start,
-                taskIds: newTaskIds,
-            };
+            //const newColumn = {
+            //    ...start,
+            //    taskIds: newTaskIds,
+            //};
 
-            const newState = {
-                ...projectFields,
-                columnProjects: {
-                    ...projectFields.columnProjects,
-                    [newColumn.id]: newColumn,
-                },
-            };
+            //const newState = {
+            //    ...projectFields,
+            //    columnProjects: {
+            //        ...projectFields.columnProjects,
+            //        [newColumn.id]: newColumn,
+            //    },
+            //};
 
-            updateprojectFields(newState);
+            //updateprojectFields(newState);
             return;
         }
 
         // Moving from one list to another
-        const startTaskIds = Array.from(start.taskIds);
+        const startTaskIds = Array.from(start.projectStudentIds);
         startTaskIds.splice(source.index, 1);
         const newStart = {
             ...start,
             taskIds: startTaskIds,
         };
 
-        const finishTaskIds = Array.from(finish.taskIds);
+        const finishTaskIds = Array.from(finish.projectStudentIds);
         finishTaskIds.splice(destination.index, 0, draggableId);
         const newFinish = {
             ...finish,
             taskIds: finishTaskIds,
         };
 
+        var cp = projectFields.columnProjects;
+        cp.find(obj => obj.id == destination.droppableId).projectStudentIds.push(draggableId);
+        cp.find(obj => obj.id == source.droppableId).projectStudentIds.splice(source.index, 1);
+
         const newState = {
             ...projectFields,
-            columnProjects: {
-                ...projectFields.columnProjects,
-                [newStart.id]: newStart,
-                [newFinish.id]: newFinish,
-            },
-        };
+            columnProjects: cp
+        }
         updateprojectFields(newState);
+
+        setStudentProjectToEdit({ studentId: draggableId, fromProjectId: source.droppableId, toProjectId: destination.droppableId });
     };
 
-    return (
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Container>
-                {projectFields.columnOrder.map(columnId => {
-                    const column = projectFields.columnProjects[columnId];
-                    const tasks = column.projectStudentIds.map(
-                        taskId => projectFields.projectStudents[taskId],
-                    );
+    if ('columnOrder' in projectFields && 'columnProjects' in projectFields) {
+        if (false) {
 
-                    return <Column key={column.id} column={column} tasks={tasks} />;
-                })}
-            </Container>
-        </DragDropContext>
-    );
+        }
+        return (
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Container>
+                    {projectFields.columnOrder.map(columnId => {
+                        let column = projectFields.columnProjects.find(obj =>
+                            obj.id === columnId);
+                        let tasks = column.projectStudentIds.map(
+                            taskId => projectFields.projectStudents.find(obj => obj.id == taskId),
+                        );
 
-    //function handleOnDragEnd(result) {
-    //    if (!result.destination) return;
 
-    //    const items = Array.from(projectFields);
-    //    const [reorderedItem] = items.splice(result.source.index, 1);
-    //    items.splice(result.destination.index, 0, reorderedItem);
-
-    //    updateprojectFields(items);
-    //}
-
-    //if (width > 600) {
-    //    return (
-    //        <div className="App">
-    //            <header className="App-header">
-    //                <h1>Join Semester</h1>
-    //                <DragDropContext onDragEnd={handleOnDragEnd}>
-    //                    <Droppable droppableId="projectFields">
-    //                        {(provided) => (
-    //                            <ul className="projectFields" {...provided.droppableProps} ref={provided.innerRef}>
-    //                                {projectFields.map(({ id, name }, index) => {
-    //                                    return (
-    //                                        <Draggable key={id} draggableId={id} index={index}>
-    //                                            {(provided) => (
-    //                                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-    //                                                    <p>
-    //                                                        {name}
-    //                                                    </p>
-    //                                                </li>
-    //                                            )}
-    //                                        </Draggable>
-    //                                    );
-    //                                })}
-    //                                {provided.placeholder}
-    //                            </ul>
-    //                        )}
-    //                    </Droppable>
-    //                </DragDropContext>
-    //            </header>
-    //        </div>
-    //    );
-    //}
-    //else {
-    //    return (
-    //        <div className="App">
-    //            <header className="App-header">
-    //                <h1>Join Semester</h1>
-    //                <DragDropContext onDragEnd={handleOnDragEnd}>
-    //                    <Droppable droppableId="projectFields">
-    //                        {(provided) => (
-    //                            <ul className="projectFields" {...provided.droppableProps} ref={provided.innerRef}>
-    //                                {projectFields.map(({ id, name, thumb }, index) => {
-    //                                    return (
-    //                                        <Draggable key={id} draggableId={id} index={index}>
-    //                                            {(provided) => (
-    //                                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-    //                                                    <p>
-    //                                                        {name}
-    //                                                    </p>
-    //                                                </li>
-    //                                            )}
-    //                                        </Draggable>
-    //                                    );
-    //                                })}
-    //                                {provided.placeholder}
-    //                            </ul>
-    //                        )}
-    //                    </Droppable>
-    //                </DragDropContext>
-    //            </header>
-    //        </div>
-    //    );
-    //}
+                        return <Column key={column.id} column={column} tasks={tasks} />;
+                    })}
+                </Container>
+            </DragDropContext>
+        );
+    }
+    else {
+        return (
+            <p>Varjal baszki, toltok</p>
+        );
+    }
 }

@@ -1,7 +1,12 @@
 ﻿using EvoNaplo.DataAccessLayer;
 using EvoNaploTFS.Models;
 using EvoNaploTFS.Models.DTO;
+using EvoNaploTFS.Models.TableConnectors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EvoNaploTFS.Services
 {
@@ -42,6 +47,27 @@ namespace EvoNaploTFS.Services
             }
 
             return projectStudentsDTO;
+        }
+
+        public bool ManageStudentOnProject(StudentToProjectDTO studentToProjectDTO)
+        {
+            try
+            {
+                var userProjecToEdit = _evoNaploContext.UserProjects.FirstOrDefault(u => u.UserId == studentToProjectDTO.studentId && u.ProjectId == studentToProjectDTO.fromProjectId);
+
+                if(userProjecToEdit == null)
+                {
+                    return false;
+                }
+                userProjecToEdit.ProjectId = studentToProjectDTO.toProjectId;
+                _evoNaploContext.SaveChanges();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            
         }
     }
 }
