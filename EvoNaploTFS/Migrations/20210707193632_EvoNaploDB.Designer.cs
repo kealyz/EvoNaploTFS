@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvoNaploTFS.Migrations
 {
     [DbContext(typeof(EvoNaploContext))]
-    [Migration("20210628202228_EvoNaploMigrationV1")]
-    partial class EvoNaploMigrationV1
+    [Migration("20210707193632_EvoNaploDB")]
+    partial class EvoNaploDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,6 +146,24 @@ namespace EvoNaploTFS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StudentComments");
+                });
+
+            modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.StudentsOnSemester", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudentsOnSemesters");
                 });
 
             modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.UserProject", b =>

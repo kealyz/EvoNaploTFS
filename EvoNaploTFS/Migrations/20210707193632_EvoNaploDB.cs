@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EvoNaploTFS.Migrations
 {
-    public partial class EvoNaploMigrationV1 : Migration
+    public partial class EvoNaploDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,6 +98,20 @@ namespace EvoNaploTFS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StudentsOnSemesters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    SemesterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentsOnSemesters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserProjects",
                 columns: table => new
                 {
@@ -150,6 +164,9 @@ namespace EvoNaploTFS.Migrations
 
             migrationBuilder.DropTable(
                 name: "StudentComments");
+
+            migrationBuilder.DropTable(
+                name: "StudentsOnSemesters");
 
             migrationBuilder.DropTable(
                 name: "UserProjects");

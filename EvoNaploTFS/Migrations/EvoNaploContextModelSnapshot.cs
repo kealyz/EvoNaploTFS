@@ -146,6 +146,24 @@ namespace EvoNaploTFS.Migrations
                     b.ToTable("StudentComments");
                 });
 
+            modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.StudentsOnSemester", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudentsOnSemesters");
+                });
+
             modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.UserProject", b =>
                 {
                     b.Property<int>("Id")
