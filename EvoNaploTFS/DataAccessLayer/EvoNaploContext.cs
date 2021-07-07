@@ -14,6 +14,7 @@ namespace EvoNaplo.DataAccessLayer
         public DbSet<ProjectComment> ProjectComments { get; set; }
         public DbSet<StudentComment> StudentComments { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
+        public DbSet<StudentsOnSemester> StudentsOnSemesters { get; set; }
 
         public EvoNaploContext(DbContextOptions<EvoNaploContext> options) : base(options)
         {
