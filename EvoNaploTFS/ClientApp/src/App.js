@@ -39,8 +39,8 @@ export default function App() {
     }, []);
 
     return (
-        <Layout session={session}>
-            <Route exact path='/' component={() => <Home session={session} />} />
+        <Layout>
+            <Route exact path='/' component={Home} />
             <Route path='/Students' component={StudentsPage} />
             <Route path='/Mentors' component={MentorsPage} />
             <Route path='/Admins' component={AdminsPage} />

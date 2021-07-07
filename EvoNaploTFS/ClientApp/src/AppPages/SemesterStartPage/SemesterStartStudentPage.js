@@ -25,7 +25,9 @@ export default function SemesterStartStudentPage() {
     }, [projectFields]);
 
     useEffect(() => {
+        
         if (studentProjectToEdit !== undefined) {
+            console.log(JSON.stringify(studentProjectToEdit));
             fetch('api/ProjectStudent/ProjectsStudentsChanged', { method: 'PUT', body: JSON.stringify(studentProjectToEdit), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     //setSuccess(true);
@@ -100,7 +102,7 @@ export default function SemesterStartStudentPage() {
         }
         updateprojectFields(newState);
 
-        setStudentProjectToEdit({ studentId: draggableId, fromProjectId: source.droppableId, toProjectId: destination.droppableId });
+        setStudentProjectToEdit({ studentId: +draggableId, fromProjectId: +source.droppableId, toProjectId: +destination.droppableId });
     };
 
     if ('columnOrder' in projectFields && 'columnProjects' in projectFields) {

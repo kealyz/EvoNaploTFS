@@ -1,48 +1,48 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using EvoNaplo.Models.DTO;
-//using EvoNaplo.Services;
-//using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using EvoNaploTFS.Helpers;
+using EvoNaploTFS.Services;
+
+namespace EvoNaplo.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SessionController : ControllerBase
+    {
 
 
+        private readonly JwtService jwtService;
+        private readonly UserService userService;
+        private readonly SessionService sessionService;
 
-//namespace EvoNaplo.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class SessionController : Controller
-//    {
+        public SessionController(JwtService _jwtService, UserService _userService,SessionService _sessionService)
+        {
+            jwtService = _jwtService;
+            userService = _userService;
+            sessionService = _sessionService;
+        }
 
+        [HttpGet]
+        public IActionResult GetSession()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
 
-//        private LoginService _loginService;
+                var token = jwtService.Verify(jwt);
 
-//        public SessionController(LoginService loginService)
-//        {
-//            _loginService = loginService;
-//        }
+                int userId = int.Parse(token.Issuer);
 
+                var user = userService.GetUserToEditById(userId);
 
+                var session = sessionService.GetSessionDTO(user);
+                return Ok(session);
+            }
+            catch (Exception)
+            {
 
-//        POST api/<controller>
-//        [HttpPost]
-//        public void PostLogIN([FromBody] LoginDTO loginDTO)
-//        {
-//            _loginService.LogInUser(loginDTO);
-
-//            redirect ?
-//        }
-
-
-//        Get api/<controller>
-//        [HttpGet]
-//        public void GetLogOut()
-//        {
-//            _loginService.LogOutUser();
-
-//            redirect ?
-//        }
-
-//    }
-//}
+                return Unauthorized();
+            }
+        }
+    }
+}

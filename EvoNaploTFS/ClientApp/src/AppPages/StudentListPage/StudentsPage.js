@@ -3,12 +3,24 @@ import GetObjectPropValues from '../../components/GetObjectPropValues/GetObjectP
 import GetObjectPropValuesMonitor from '../../components/GetObjectPropValues/GetObjectPropValuesMonitor';
 import Accordion from '../../components/Accordion/Accordion';
 import ListTable from '../ListTable';
+import UnauthorizedPage from '../../components/Unauthorized';
 
 export default function StudentsPage() {
     const [data, setData] = useState([]);
     const [q, setQ] = useState("");
     const fetchUrl = '/Students';
-    
+
+    const [session, setSession] = useState();
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('api/Session', { method: 'GET' });
+                const content = await response.json();
+
+                await setSession(content);
+            }
+        )();
+    }, []);
 
     useEffect(() => {
         fetch('api/User' + fetchUrl)
@@ -20,12 +32,21 @@ export default function StudentsPage() {
         return rows.filter(row => row.name.toLowerCase().indexOf(q.toLowerCase()) > -1)
     }
 
+    if (session !== undefined) {
+        if (session.title !== "Unauthorized") {
+            if (session.role !== "Student") {
+                return (
+                    <div>
+                        Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
+                        <br />
+                        <br />
+                        <ListTable data={search(data)} headings={["Id", "Name", "Activity", "Email", "Phone"]} url={'api/User'} />
+                    </div>
+                );
+            }
+        }
+    }
     return (
-        <div>
-            Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
-            <br/>
-            <br/>
-            <ListTable data={search(data)} headings={["Id", "Name", "Activity", "Email", "Phone"]} url={'api/User'} />
-        </div>
+        <UnauthorizedPage />
     );
 }

@@ -12,7 +12,6 @@ namespace EvoNaploTFS.Models.DTO
         public string IsActive { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public int Role { get; set; }
 
         public UserDTO()
         {
@@ -25,7 +24,6 @@ namespace EvoNaploTFS.Models.DTO
             IsActive = user.IsActive ? "Active" : "Inactive";
             Name = $"{user.FirstName} {user.LastName}";
             Email = user.Email;
-            Role = (int)user.Role;
             if (!String.IsNullOrEmpty(user.PhoneNumber))
             {
                 PhoneNumber = user.PhoneNumber;

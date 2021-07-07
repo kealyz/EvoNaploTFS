@@ -5,7 +5,7 @@ import NavMenu from './NavMenu';
 export default function Layout(props) {
     return (
         <div>
-            <NavMenu session={props.session} />
+            <NavMenu/>
             <Container>
                 {props.children}
             </Container>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EvoNaploTFS.Helpers;
 using EvoNaploTFS.Models;
 using EvoNaploTFS.Models.DTO;
 using EvoNaploTFS.Services;
@@ -34,7 +35,5 @@ namespace EvoNaploTFS.Controllers
         {
             return _adminService.ListActiveAdmins();
         }
-
-       
     }
 }
