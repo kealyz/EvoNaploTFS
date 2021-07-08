@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace EvoNaploTFS.Services
 {
@@ -63,11 +64,25 @@ namespace EvoNaploTFS.Services
                 _evoNaploContext.SaveChanges();
                 return true;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return false;
             }
             
+        }
+
+        public async Task JoinProjectAsStudent(int studentId, int projectId)
+        {
+            var newRowToAdd = new UserProject();
+            newRowToAdd.UserId = studentId;
+            newRowToAdd.ProjectId = projectId;
+            await _evoNaploContext.UserProjects.AddAsync(newRowToAdd);
+        }
+
+        public async Task LeaveProjectAsStudent(int studentId, int projectId)
+        {
+            var rowToDelete = _evoNaploContext.UserProjects.First(row => row.UserId == studentId && row.ProjectId == projectId);
+            _evoNaploContext.UserProjects.Remove(rowToDelete);
         }
     }
 }

@@ -32,5 +32,19 @@ namespace EvoNaploTFS.Controllers
             }
             return StatusCodes.Status401Unauthorized;
         }
+
+        [HttpPost("JoinProject")]
+        public async Task<int> JoinProject([FromBody] int studentId, int projectId)
+        {
+            await _projectStudentService.JoinProjectAsStudent(studentId, projectId);
+            return StatusCodes.Status200OK;
+        }
+
+        [HttpDelete("LeaveProject")]
+        public async Task<int> LeaveProject([FromBody] int studentId, int projectId)
+        {
+            await _projectStudentService.LeaveProjectAsStudent(studentId, projectId);
+            return StatusCodes.Status200OK;
+        }
     }
 }
