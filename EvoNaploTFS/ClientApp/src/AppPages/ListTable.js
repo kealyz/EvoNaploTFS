@@ -50,7 +50,7 @@ export default function RenderTable(props) {
         default:
         // code block
     }
-    
+
 
     if (width > 600) {
         return (
@@ -65,15 +65,17 @@ export default function RenderTable(props) {
                     <tbody>
                         {users.map((row) =>
                             <tr>
-                                {columns.map((column) =>
-                                    <td>{row[column]}</td>
-                                )}
+                                {columns.map((column) => {
+                                    if (column != "id") {
+                                        return (<td>{row[column]}</td>);
+                                    }
+                                })}
                                 <td>
                                     <a href={pageViewURL + row.id}>
-                                        <BsEye className="ActionIcon ViewIcon"/>
+                                        <BsEye className="ActionIcon ViewIcon" />
                                     </a>
                                     <a href={editPageURL + row.id}>
-                                        <BsPencil class="ActionIcon EditIcon"/>
+                                        <BsPencil class="ActionIcon EditIcon" />
                                     </a>
                                     <BsTrashFill class="ActionIcon RemoveIcon" onClick={() => RemoveContent(row.id, props.url)} />
                                 </td>

@@ -47,9 +47,16 @@ function GetLists(role) {
     );
 }
 
+function Logout() {
+    fetch("api/Auth/Logout", { method: 'POST' })
+        .then(function () {
+            window.location = "LoginPage";
+        });
+}
+
 export default function NavMenu(props) {
 
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
     const [session, setSession] = useState();
 
@@ -67,6 +74,8 @@ export default function NavMenu(props) {
     function toggleNavbar() {
         setCollapsed(!collapsed);
     }
+
+    
 
     function getNavBar() {
         if (session !== undefined) {
@@ -87,7 +96,7 @@ export default function NavMenu(props) {
                                 <NavLink tag={Link} className="NavLinkFonts" to="/StartSemester">Start Semester</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="NavLinkFonts" to="/Logout">Logout</NavLink>
+                                <a tag={Link} className="NavLinkFonts" onClick={() => Logout()}>Logout</a>
                             </NavItem>
                         </ul>
                     );
@@ -99,6 +108,9 @@ export default function NavMenu(props) {
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <a tag={Link} className="NavLinkFonts" onClick={() => Logout()}>Logout</a>
                         </NavItem>
                     </ul>
                 );

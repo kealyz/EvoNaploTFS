@@ -5,7 +5,7 @@ import Accordion from '../../components/Accordion/Accordion';
 import ListTable from '../ListTable';
 import UnauthorizedPage from '../../components/Unauthorized';
 
-export default function MentorsPage()  {
+export default function MentorsPage() {
     const [data, setData] = useState([]);
     const [q, setQ] = useState("");
     const fetchUrl = '/Mentors';
@@ -31,19 +31,21 @@ export default function MentorsPage()  {
     function search(rows) {
         return rows.filter(row => row.name.toLowerCase().indexOf(q.toLowerCase()) > -1)
     }
-
     if (session !== undefined) {
         if (session.title !== "Unauthorized") {
-            if (session.role !== "Student") {
+            if (session.role !== "Student" && Object.keys(data).length > 0) {
                 return (
                     <div>
                         Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
                         <br />
                         <br />
-                        <ListTable data={search(data)} headings={["Id", "Name", "Activity", "Email", "Phone"]} url={'api/User'} />
+                        <ListTable data={search(data)} headings={["Name", "Activity", "Email", "Phone"]} url={'api/User'} />
                     </div>
                 );
             }
+            return (
+                <p>No data available</p>
+            );
         }
     }
     return (

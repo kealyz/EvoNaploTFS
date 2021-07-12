@@ -35,16 +35,19 @@ export default function ProjectsPage() {
 
     if (session !== undefined) {
         if (session.title !== "Unauthorized") {
-            if (session.role !== "Student") {
+            if (session.role !== "Student" && Object.keys(data).length > 0) {
                 return (
                     <div>
                         Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
                         <br />
                         <br />
-                        <ListTable data={search(data)} headings={["Id", "Project name", "Description", "Source link", "Technologies", "Semester Id"]} url={'api/Project'} />
+                        <ListTable data={search(data)} headings={["Project name", "Description", "Source link", "Technologies", "Semester Id"]} url={'api/Project'} />
                     </div>
                 );
             }
+            return (
+                <p>No data available</p>
+            );
         }
     }
     return (

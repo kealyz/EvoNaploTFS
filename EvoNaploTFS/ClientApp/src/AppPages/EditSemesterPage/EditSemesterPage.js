@@ -70,7 +70,7 @@ export default function EditUserPage(props) {
 
     if (session !== undefined) {
         if (session.title !== "Unauthorized") {
-            if (session.role !== "Student") {
+            if (session.role === "Admin") {
                 return (
                     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
                     <div class="DivCard">

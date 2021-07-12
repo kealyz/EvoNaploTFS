@@ -71,7 +71,7 @@ const AddSemesterPage = () => {
 
     if (session !== undefined) {
         if (session.title !== "Unauthorized") {
-            if (session.role !== "Student") {
+            if (session.role === "Admin") {
                 return (
                     <div class="DivCard">
                         <h1>Registration</h1>

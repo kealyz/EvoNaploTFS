@@ -2,17 +2,13 @@
 }
 
 .DivCard {
-    font-size: 1.2rem;
     padding: 15px;
-    -webkit-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.3);
-    box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.3);
-    display: table;
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.1);
     margin: 0 auto;
-}
-.DivCard td
-{
-    height: 60px;
-    vertical-align: top;
+    max-width: 503px;
+    border-radius: 4px;
+    background-color: white;
 }
 .ErrorParagraph
 {
@@ -21,24 +17,39 @@
     padding: 0;
     margin: 0;
 }
-.DivCard input[type="text"]
-{
-    border: none;
-    border-bottom: 1px solid limegreen;
+.DivCard input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
-.DivCard input[type="text"]:focus
-{
-    outline: none;
+    .DivCard input[type="text"]:focus, input[type="password"]:focus {
+        outline: none;
+    }
+
+.DivCard input[type="submit"] {
+    margin: 10px 0;
+    box-shadow: inset 0px 1px 0px 0px #caefab;
+    background: linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+    background-color: #77d42a;
+    border-radius: 6px;
+    border: 1px solid #268a16;
+    display: inline-block;
+    cursor: pointer;
+    color: #f8f9fa;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #aade7c;
+    width: 100%;
 }
 
-.DivCard input[type="password"] {
-    border: none;
-    border-bottom: 1px solid limegreen;
-}
-
-.DivCard input[type="password"]:focus {
-    outline: none;
-}
+    .DivCard input[type="submit"]:hover {
+        background: linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
+        background-color: #5cb811;
+    }
 
 .SuccessParagraph {
     color: limegreen;
@@ -49,4 +60,8 @@
 .joffan {
     font-size:14px;
     display: inline;
+}
+
+.centerCard {
+    position: center;
 }

@@ -1,7 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserImg from "../../components/Pictures/user.png";
-import './ProjectPageViewStyle.css'
 import UnauthorizedPage from '../../components/Unauthorized';
 
 

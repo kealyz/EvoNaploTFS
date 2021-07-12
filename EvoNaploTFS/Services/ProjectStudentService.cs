@@ -22,6 +22,10 @@ namespace EvoNaploTFS.Services
 
         internal ProjectStudentsDTO GetProjectStudents()
         {
+            if(_evoNaploContext.Semesters.ToList().Count == 0)
+            {
+                return new ProjectStudentsDTO();
+            }
             var mostRecentSemesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
             var projects = _evoNaploContext.Projects.Where(project => project.SemesterId == mostRecentSemesterId).ToList();
             var students = _evoNaploContext.Users.Where(student => student.Role == User.RoleTypes.Student).ToList();
