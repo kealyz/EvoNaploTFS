@@ -90,6 +90,9 @@ export default function NavMenu(props) {
                                 <DropdownMenu title="Lists" content={GetLists(session.role)} />
                             </NavItem>
                             <NavItem>
+                                <NavLink tag={Link} className="NavLinkFonts" to="/JoinProject">Join Project</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
                             </NavItem>
                             <NavItem>
@@ -108,6 +111,9 @@ export default function NavMenu(props) {
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="NavLinkFonts" to="/JoinProject">Join Project</NavLink>
                         </NavItem>
                         <NavItem>
                             <a tag={Link} className="NavLinkFonts" onClick={() => Logout()}>Logout</a>

@@ -4,20 +4,21 @@ namespace EvoNaploTFS.Models.DTO
 {
     public class ProjectStudentsDTO
     {
-        public List<ProjectStudent> projectStudents { get; set; } = new List<ProjectStudent>();
+        public List<ProjectUser> usersOnProject { get; set; } = new List<ProjectUser>();
+        public List<ProjectUser> usersNotOnProject { get; set; } = new List<ProjectUser>();
         public List<ColumnProject> columnProjects { get; set; } = new List<ColumnProject>();
         public List<string> columnOrder { get; set; } = new List<string>();
     }
 
-    public class ProjectStudent
+    public class ProjectUser
     {
         public string Id { get; set; }
         public string Name { get; set; }
 
-        public ProjectStudent(User user)
+        public ProjectUser(UserDTO user)
         {
             Id = user.Id.ToString();
-            Name = $"{user.FirstName} {user.LastName}";
+            Name = user.Name;
         }
     }
 

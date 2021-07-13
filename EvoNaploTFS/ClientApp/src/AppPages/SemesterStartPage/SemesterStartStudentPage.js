@@ -116,7 +116,7 @@ export default function SemesterStartStudentPage() {
                         let column = projectFields.columnProjects.find(obj =>
                             obj.id === columnId);
                         let tasks = column.projectStudentIds.map(
-                            taskId => projectFields.projectStudents.find(obj => obj.id == taskId),
+                            taskId => projectFields.usersOnProject.find(obj => obj.id == taskId),
                         );
 
 
@@ -128,7 +128,7 @@ export default function SemesterStartStudentPage() {
     }
     else {
         return (
-            <p>Varjal baszki, toltok</p>
+            <p>Loading data..</p>
         );
     }
 }

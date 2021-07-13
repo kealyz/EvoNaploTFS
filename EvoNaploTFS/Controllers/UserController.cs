@@ -52,12 +52,6 @@ namespace EvoNaploTFS.Controllers
             return _userService.GetUserToEditById(id);
         }
 
-        [HttpGet("GetStudentComments")]
-        public IEnumerable<StudentCommentDTO> GetStudentComments(int id)
-        {
-            return _userService.GetStudentComments(id);
-        }
-
         //PUT
         [HttpPut("EditUser")]
         public async Task<int> EditUser([FromBody]User user)

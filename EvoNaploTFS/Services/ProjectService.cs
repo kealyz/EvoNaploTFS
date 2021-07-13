@@ -1,6 +1,7 @@
 ﻿using EvoNaplo.DataAccessLayer;
 using EvoNaploTFS.Models;
 using EvoNaploTFS.Models.DTO;
+using EvoNaploTFS.Models.TableConnectors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -91,6 +92,37 @@ namespace EvoNaploTFS.Services
             _evoNaploContext.Remove(projectToDelete);
             _evoNaploContext.SaveChanges();
             return _evoNaploContext.Projects.ToList();
+        }
+
+        public ProjectDTO GetMyProjectThisSemester(int userId)
+        {
+            var semsterId = _evoNaploContext.Semesters.Max(s => s.Id);
+            var projectIds = _evoNaploContext.Projects.Where(p => p.SemesterId == semsterId).Select(p=>p.Id).ToList();
+
+            var userProjects = _evoNaploContext.UserProjects.Where(up => up.UserId == userId).ToList();
+            foreach (var up in userProjects)
+            {
+                if(projectIds.Contains(up.ProjectId))
+                {
+                    return GetProjectById(up.ProjectId);
+                }
+            }
+            return new ProjectDTO();
+        }
+
+        public async Task<IEnumerable<UserProject>> JoinProject(int userId, int projectId)
+        {
+            await _evoNaploContext.UserProjects.AddAsync(new UserProject(userId,projectId));
+            _evoNaploContext.SaveChanges();
+            return _evoNaploContext.UserProjects.ToList();
+        }
+
+        public async Task<IEnumerable<UserProject>> LeaveProject(int userId, int projectId)
+        {
+            var projectToLeave = _evoNaploContext.UserProjects.FirstOrDefault(u => u.UserId == userId && u.ProjectId == projectId);
+            _evoNaploContext.Remove(projectToLeave);
+            _evoNaploContext.SaveChanges();
+            return _evoNaploContext.UserProjects.ToList();
         }
     }
 }

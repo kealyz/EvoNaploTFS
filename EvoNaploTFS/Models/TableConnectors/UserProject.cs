@@ -15,5 +15,16 @@ namespace EvoNaploTFS.Models.TableConnectors
         public int UserId { get; set; }
         [ForeignKey("ProjectId")]
         public int ProjectId { get; set; }
+
+        public UserProject()
+        {
+
+        }
+
+        public UserProject(int userId, int projectId)
+        {
+            UserId = userId;
+            ProjectId = projectId;
+        }
     }
 }

@@ -18,10 +18,12 @@ import EditProjectsPage from './AppPages/EditProjectsPage/EditProjectsPage';
 import SemesterStartStudentPage from './AppPages/SemesterStartPage/SemesterStartStudentPage';
 import SemesterStartAdminPage from './AppPages/SemesterStartPage/SemesterStartAdminPage';
 import LoginPage from './AppPages/LoginPage/LoginPage';
+import JoinProjectPage from './AppPages/JoinProjectPage/JoinProjectPage';
 
 
 import './custom.css'
 import './components/Accordion.css'
+import JoinProject from './AppPages/JoinProjectPage/JoinProjectPage';
 
 export default function App() {
     const displayName = App.name;
@@ -57,6 +59,8 @@ export default function App() {
             <Route path='/JoinSemester' component={SemesterStartStudentPage} />
             <Route path='/StartSemester' component={SemesterStartAdminPage} />
             <Route path='/LoginPage' component={LoginPage} />
+            <Route path='/JoinProject' component={JoinProjectPage} />
+
         </Layout>
     );
 }

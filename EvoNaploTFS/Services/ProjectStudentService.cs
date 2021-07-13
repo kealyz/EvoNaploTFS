@@ -14,26 +14,50 @@ namespace EvoNaploTFS.Services
     public class ProjectStudentService
     {
         private readonly EvoNaploContext _evoNaploContext;
+        private readonly UserService _userService;
 
-        public ProjectStudentService(EvoNaploContext EvoNaploContext)
+        public ProjectStudentService(EvoNaploContext EvoNaploContext, UserService userService)
         {
             _evoNaploContext = EvoNaploContext;
+            _userService = userService;
+        }
+
+        private List<int> GetUsersOnProjectIds(int projectId)
+        {
+            var userProjects = _evoNaploContext.UserProjects.Where(up => up.ProjectId == projectId).ToList();
+            List<int> usersOnProjectIds = new List<int>();
+            userProjects.ForEach(up =>
+            {
+                usersOnProjectIds.Add(up.UserId);
+            });
+            return usersOnProjectIds;
         }
 
         internal ProjectStudentsDTO GetProjectStudents()
         {
-            if(_evoNaploContext.Semesters.ToList().Count == 0)
+            if (_evoNaploContext.Semesters.ToList().Count == 0)
             {
                 return new ProjectStudentsDTO();
             }
             var mostRecentSemesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
             var projects = _evoNaploContext.Projects.Where(project => project.SemesterId == mostRecentSemesterId).ToList();
-            var students = _evoNaploContext.Users.Where(student => student.Role == User.RoleTypes.Student).ToList();
+
+            List<UserDTO> usersOnProject = new List<UserDTO>();
+            foreach (var project in projects)
+            {
+                List<int> usersOnProjectIds = GetUsersOnProjectIds(project.Id);
+                foreach (var userId in usersOnProjectIds)
+                {
+                    usersOnProject.Add(_userService.GetUserById(userId));
+                }
+            }
+            
             var projectStudentTable = _evoNaploContext.UserProjects.ToList();
 
             ProjectStudentsDTO projectStudentsDTO = new ProjectStudentsDTO();
 
-            projectStudentsDTO.projectStudents = students.Select(student => new ProjectStudent(student)).ToList();
+            projectStudentsDTO.usersOnProject = usersOnProject.Select(user => new ProjectUser(user)).ToList();
+            //projectStudentsDTO.usersNotOnProject = usersNotOnProject.Select(user => new ProjectUser(user)).ToList();
 
             foreach (var project in projects)
             {
@@ -60,7 +84,7 @@ namespace EvoNaploTFS.Services
             {
                 var userProjecToEdit = _evoNaploContext.UserProjects.FirstOrDefault(u => u.UserId == studentToProjectDTO.studentId && u.ProjectId == studentToProjectDTO.fromProjectId);
 
-                if(userProjecToEdit == null)
+                if (userProjecToEdit == null)
                 {
                     return false;
                 }
@@ -72,7 +96,7 @@ namespace EvoNaploTFS.Services
             {
                 return false;
             }
-            
+
         }
 
         public async Task JoinProjectAsStudent(int studentId, int projectId)

@@ -6,13 +6,14 @@
         public string Comment { get; set; }
         public int OwnerId { get; set; }
         public int CommenterId { get; set; }
+        public string CommenterName { get; set; }
 
-        public CommentDTO(int id, string comment, int ownerId, int commenterId)
+        public CommentDTO(string comment, int ownerId, int commenterId,string commenterName)
         {
-            Id = id;
             Comment = comment;
             OwnerId = ownerId;
             CommenterId = commenterId;
+            CommenterName = commenterName;
         }
     }
 }

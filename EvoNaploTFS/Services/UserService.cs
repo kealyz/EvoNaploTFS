@@ -73,24 +73,6 @@ namespace EvoNaploTFS.Services
             }
         }
 
-        public IEnumerable<StudentCommentDTO> GetStudentComments(int id)
-        {
-            var comments = _evoNaploContext.StudentComments.Where(c => c.UserId == id);
-            List<StudentComment> commentsCopy = new List<StudentComment>();
-            foreach (var comment in comments)
-            {
-                commentsCopy.Add(comment);
-            }
-            List<StudentCommentDTO> result = new List<StudentCommentDTO>();
-            foreach (var comment in commentsCopy)
-            {
-                var commenter = _evoNaploContext.Users.FirstOrDefault(u => u.Id == comment.CommenterId);
-                string commenterName = $"{commenter.FirstName} {commenter.LastName}";
-                result.Add(new StudentCommentDTO(comment,commenterName));
-            }
-            return result;
-        }
-
         public async Task<IEnumerable<User>> EditUser(User user)
         {
             var UserToEdit = await _evoNaploContext.Users.FindAsync(user.Id);

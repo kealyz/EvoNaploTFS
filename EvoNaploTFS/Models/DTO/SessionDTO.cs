@@ -3,11 +3,13 @@
     public class SessionDTO
     {
         public int id { get; set; }
+        public string name { get; set; }
         public string role { get; set; }
 
         public SessionDTO(User user)
         {
             id = user.Id;
+            name = $"{user.FirstName} {user.LastName}";
             switch (user.Role)
             {
                 case User.RoleTypes.Student:

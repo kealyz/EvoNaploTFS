@@ -57,5 +57,24 @@ namespace EvoNaploTFS.Controllers
             return StatusCodes.Status200OK;
         }
 
+        [HttpGet("MyProjectThisSemester")]
+        public ProjectDTO GetMyProjectThisSemester(int userId)
+        {
+            return _projectService.GetMyProjectThisSemester(userId);
+        }
+
+        [HttpPost("JoinProject")]
+        public async Task<int> JoinProject(int userId,int projectId)
+        {
+            await _projectService.JoinProject(userId, projectId);
+            return StatusCodes.Status200OK;
+        }
+
+        [HttpDelete("LeaveProject")]
+        public async Task<int> LeaveProject(int userId,int projectId)
+        {
+            await _projectService.LeaveProject(userId, projectId);
+            return StatusCodes.Status200OK;
+        }
     }
 }

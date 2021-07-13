@@ -3,6 +3,7 @@ using EvoNaploTFS.Models.TableConnectors;
 using EvoNaploTFS.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EvoNaploTFS.Controllers
@@ -16,6 +17,12 @@ namespace EvoNaploTFS.Controllers
         public CommentController(CommentService commentService)
         {
             _commentService = commentService;
+        }
+
+        [HttpGet("StudentComments")]
+        public IEnumerable<CommentDTO> GetStudentComments(int id)
+        {
+            return _commentService.GetStudentComments(id);
         }
 
         [HttpPost("StudentComment")]
