@@ -2,14 +2,8 @@
 using EvoNaploTFS.Models;
 using EvoNaploTFS.Models.DTO;
 using EvoNaploTFS.Models.TableConnectors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace EvoNaploTFS.Services
@@ -50,6 +44,12 @@ namespace EvoNaploTFS.Services
                 result.Add(new ProjectDTO(project));
             }
             return result.Where(project => project.SemesterId == currentSemesterId);
+        }
+
+        internal async Task AddProject(Project project)
+        {
+            await _evoNaploContext.Projects.AddAsync(project);
+            _evoNaploContext.SaveChanges();
         }
 
         public ProjectDTO GetProjectById(int id)

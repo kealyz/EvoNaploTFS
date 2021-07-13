@@ -31,7 +31,7 @@ namespace EvoNaploTFS.Controllers
         [HttpGet]
         public IEnumerable<UserDTO> GetStudent()
         {
-            return _studentService.ListActiveStudents();
+            return _studentService.ListStudents();
         }
 
         [HttpGet("Janik")]

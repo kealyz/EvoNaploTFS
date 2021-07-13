@@ -46,6 +46,7 @@ namespace EvoNaploTFS
             services.AddScoped<ProjectStudentService>();
             services.AddScoped<SessionService>();
             services.AddScoped<CommentService>();
+            services.AddScoped<AttendanceSheetService>();
             ////I hope this is the dependency injection part -marci
             //services.AddScoped<PasswordService>();
             //services.AddScoped<LoginService>();

@@ -24,7 +24,6 @@ namespace EvoNaploTFS.Services
         {
             _logger.LogInformation($"Diák hozzáadása következik: {user}");
             user.Role = User.RoleTypes.Student;
-            user.IsActive = true;
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             await _evoNaploContext.Users.AddAsync(user);
             _evoNaploContext.SaveChanges();
@@ -33,24 +32,42 @@ namespace EvoNaploTFS.Services
             return students.ToList();
         }
 
-        public IEnumerable<UserDTO> ListActiveStudents()
+        public IEnumerable<UserDTO> ListStudents()
         {
-            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student && m.IsActive == true);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student);
             List<UserDTO> result = new List<UserDTO>();
             foreach (var student in students)
             {
-                result.Add(new UserDTO(student));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == student.Id))
+                {
+                    result.Add(new UserDTO(student, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(student, false));
+                }
             }
             return result;
         }
 
         public IEnumerable<UserDTO> ListJanis()
         {
-            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Jani);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var janis = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Jani);
             List<UserDTO> result = new List<UserDTO>();
-            foreach (var student in students)
+            foreach (var jani in janis)
             {
-                result.Add(new UserDTO(student));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == jani.Id))
+                {
+                    result.Add(new UserDTO(jani, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(jani, false));
+                }
             }
             return result;
         }

@@ -25,7 +25,7 @@ namespace EvoNaploTFS.Controllers
         [HttpGet("Students")]
         public IEnumerable<UserDTO> GetStudent()
         {
-            return _userService.ListActiveStudents();
+            return _userService.ListStudents();
         }
 
         [HttpGet("Mentors")]
@@ -57,6 +57,13 @@ namespace EvoNaploTFS.Controllers
         public async Task<int> EditUser([FromBody]User user)
         {
             await _userService.EditUser(user);
+            return StatusCodes.Status200OK;
+        }
+
+        [HttpPut("EditUserRole")]
+        public async Task<int> EditUserRole([FromBody] User user, User.RoleTypes newRole)
+        {
+            await _userService.EditUserRole(user, newRole);
             return StatusCodes.Status200OK;
         }
 

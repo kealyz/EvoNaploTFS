@@ -32,13 +32,22 @@ namespace EvoNaploTFS.Services
             return mentors.ToList();
         }
 
-        public IEnumerable<UserDTO> ListActiveMentors()
+        public IEnumerable<UserDTO> ListMentors()
         {
-            var mentors = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Mentor && m.IsActive == true);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var mentors = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Mentor);
             List<UserDTO> result = new List<UserDTO>();
             foreach (var mentor in mentors)
             {
-                result.Add(new UserDTO(mentor));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == mentor.Id))
+                {
+                    result.Add(new UserDTO(mentor, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(mentor, false));
+                }
             }
             return result;
         }
