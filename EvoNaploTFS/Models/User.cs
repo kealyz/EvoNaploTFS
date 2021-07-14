@@ -1,7 +1,4 @@
-﻿using EvoNaplo.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EvoNaploTFS.Models
 {
@@ -15,7 +12,6 @@ namespace EvoNaploTFS.Models
         public string LastName { get; set; }
         [Required]
         public string Password { get; set; }
-        public bool IsActive { get; set; }
         [Required]
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -39,7 +35,6 @@ namespace EvoNaploTFS.Models
             FirstName = user.FirstName;
             LastName = user.LastName;
             Password = user.Password;
-            IsActive = true;
             Email = user.Email;
             PhoneNumber = user.PhoneNumber;
             Role = user.Role;

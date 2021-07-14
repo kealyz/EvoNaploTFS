@@ -19,6 +19,7 @@ import SemesterStartStudentPage from './AppPages/SemesterStartPage/SemesterStart
 import SemesterStartAdminPage from './AppPages/SemesterStartPage/SemesterStartAdminPage';
 import LoginPage from './AppPages/LoginPage/LoginPage';
 import JoinProjectPage from './AppPages/JoinProjectPage/JoinProjectPage';
+import MyAccountPage from './AppPages/MyAccount/MyAccountPage';
 
 
 import './custom.css'
@@ -54,12 +55,14 @@ export default function App() {
             <Route path='/SemesterPageView/:id' component={SemesterPageView} />
             <Route path='/EditSemesterPage/:id' component={EditSemesterPage} />
             <Route path='/AddSemesterPage' component={AddSemesterPage} />
+            <Route path='/AddProjectPage' component={AddProjectPage} />
             <Route path='/ProjectPageView/:id' component={ProjectPageView} />
             <Route path='/EditProjectsPage/:id' component={EditProjectsPage} />
             <Route path='/JoinSemester' component={SemesterStartStudentPage} />
             <Route path='/StartSemester' component={SemesterStartAdminPage} />
             <Route path='/LoginPage' component={LoginPage} />
             <Route path='/JoinProject' component={JoinProjectPage} />
+            <Route path='/MyAccountPage' component={MyAccountPage} />
 
         </Layout>
     );

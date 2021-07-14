@@ -33,7 +33,7 @@ namespace EvoNaploTFS.Controllers
         [HttpGet]
         public IEnumerable<UserDTO> GetAdmin()
         {
-            return _adminService.ListActiveAdmins();
+            return _adminService.ListAdmins();
         }
     }
 }

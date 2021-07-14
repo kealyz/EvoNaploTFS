@@ -31,7 +31,7 @@ namespace EvoNaploTFS.Controllers
         [HttpGet]
         public IEnumerable<UserDTO> GetMentor()
         {
-            return _mentorService.ListActiveMentors();
+            return _mentorService.ListMentors();
         }
     }
 }

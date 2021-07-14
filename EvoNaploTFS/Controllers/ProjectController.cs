@@ -25,6 +25,13 @@ namespace EvoNaploTFS.Controllers
             return _projectService.GetProjects();
         }
 
+        [HttpPost("AddProject")]
+        public async Task<int> PostAddProject([FromBody] Project project)
+        {
+            await _projectService.AddProject(project);
+            return StatusCodes.Status200OK;
+        }
+
         [HttpGet("ProjectsOfCurrentSemester")]
         public IEnumerable<ProjectDTO> GetProjectsOfCurrentSemester()
         {

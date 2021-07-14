@@ -7,7 +7,7 @@ import UnauthorizedPage from '../../components/Unauthorized';
 
 const AddSemesterPage = () => {
 
-    const [semester, setSemester] = useState({
+    const [project, setSemester] = useState({
         startDate: '',
         endDate: '',
         isAppliable: false
@@ -32,29 +32,29 @@ const AddSemesterPage = () => {
 
     const handleChange = e => {
         setSemester({
-            ...semester,
+            ...project,
             [e.target.name]: e.target.value
         });
         if (e.target.name === "isAppliable") {
             setSemester({
-                ...semester,
+                ...project,
                 [e.target.name]: e.currentTarget.value === 'true' ? true : false
             })
         }
-        console.log(semester);
+        console.log(project);
     }
     //{"startDate": "2088-01-01T00:00:00", "endDate": "2088-01-01T00:00:00", "isAppliable": true}
 
     const onSubmit = e => {
         e.preventDefault()
 
-        const returnedErrors = EditSemesterValidate(semester);
+        const returnedErrors = EditSemesterValidate(project);
         setErrors(returnedErrors);
 
         if (Object.keys(returnedErrors).length == 0) {
            
-            console.log(semester);
-            fetch('api/Semester/AddSemester', { method: 'POST', body: JSON.stringify(semester), headers: { "Content-Type": "application/json" } })
+            console.log(project);
+            fetch('api/Semester/AddSemester', { method: 'POST', body: JSON.stringify(project), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
                 })
@@ -80,13 +80,13 @@ const AddSemesterPage = () => {
                             <table>
                                 <tr>
                                     <td>
-                                        <input type="text" name="startDate" value={semester.startDate} placeholder="StartDate" onChange={handleChange} />
+                                        <input type="text" name="startDate" value={project.startDate} placeholder="StartDate" onChange={handleChange} />
                                         {errors.startDate && <p class="ErrorParagraph">{errors.startDate}</p>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="endDate" value={semester.endDate} placeholder="EndDate" onChange={handleChange} />
+                                        <input type="text" name="endDate" value={project.endDate} placeholder="EndDate" onChange={handleChange} />
                                         {errors.endDate && <p class="ErrorParagraph">{errors.endDate}</p>}
                                     </td>
                                 </tr>
@@ -94,16 +94,16 @@ const AddSemesterPage = () => {
                                     <td>
                                         {/*<input type="checkbox" name="isAppliable" value="ture" onChange={handleChange} />*/}
                                         <label >isAppliable</label><br />
-                                        <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} checked={semester.isAppliable === true} />
+                                        <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} checked={project.isAppliable === true} />
                                         <label for="isAppliableTrue">True</label><br />
-                                        <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} checked={semester.isAppliable === false} />
+                                        <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} checked={project.isAppliable === false} />
                                         <label for="isAppliableFalse">False</label><br />
                                     </td>
                                 </tr>
                             </table>
                             <input type="submit" />
                         </form>
-                        {success && <p class="SuccessParagraph">Semester {semester.startDate} : {semester.endDate} successfully added.</p>}
+                        {success && <p class="SuccessParagraph">Semester {project.startDate} : {project.endDate} successfully added.</p>}
                         <a href="/Semesters" class="joffan">
                             Back
              </a>
@@ -117,7 +117,7 @@ const AddSemesterPage = () => {
         <UnauthorizedPage />
     );
 }
-//<input type="checkbox" name="isAppliable" value={semester.isAppliable} onChange={handleChange} />
-//<input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
+//<input type="checkbox" name="isAppliable" value={project.isAppliable} onChange={handleChange} />
+//<input type="text" name="isAppliable" value={project.isAppliable} placeholder="False" onChange={handleChange} />
 //{ errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p> }
 export default AddSemesterPage;

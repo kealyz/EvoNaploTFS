@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace EvoNaploTFS.Models.DTO
 {
@@ -19,10 +15,10 @@ namespace EvoNaploTFS.Models.DTO
             Id = -1;
         }
 
-        public UserDTO(User user)
+        public UserDTO(User user, bool isActive)
         {
             Id = user.Id;
-            IsActive = user.IsActive ? "Active" : "Inactive";
+            IsActive = isActive ? "Active" : "Inactive";
             Name = $"{user.FirstName} {user.LastName}";
             Email = user.Email;
             if (!String.IsNullOrEmpty(user.PhoneNumber))

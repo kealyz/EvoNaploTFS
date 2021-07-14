@@ -16,44 +16,87 @@ namespace EvoNaploTFS.Services
         {
             _evoNaploContext = EvoNaploContext;
         }
-        public IEnumerable<UserDTO> ListActiveStudents()
+        public IEnumerable<UserDTO> ListStudents()
         {
-            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student && m.IsActive == true);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student);
             List<UserDTO> result = new List<UserDTO>();
             foreach (var student in students)
             {
-                result.Add(new UserDTO(student));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == student.Id))
+                {
+                    result.Add(new UserDTO(student, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(student, false));
+                }
             }
             return result;
         }
         public IEnumerable<UserDTO> ListActiveMentors()
         {
-            var mentors = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Mentor && m.IsActive == true);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var mentors = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Mentor);
             List<UserDTO> result = new List<UserDTO>();
             foreach (var mentor in mentors)
             {
-                result.Add(new UserDTO(mentor));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == mentor.Id))
+                {
+                    result.Add(new UserDTO(mentor, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(mentor, false));
+                }
             }
             return result;
         }
 
+        internal async Task EditUserRole(User user, User.RoleTypes newRole)
+        {
+                var UserToEdit = await _evoNaploContext.Users.FindAsync(user.Id);
+                UserToEdit.Role = newRole;
+                _evoNaploContext.SaveChanges();
+        }
+
         public IEnumerable<UserDTO> ListActiveAdmins()
         {
-            var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin && m.IsActive == true);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin);
             List<UserDTO> result = new List<UserDTO>();
             foreach (var admin in admins)
             {
-                result.Add(new UserDTO(admin));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == admin.Id))
+                {
+                    result.Add(new UserDTO(admin, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(admin, false));
+                }
             }
             return result;
         }
 
         public UserDTO GetUserById(int id)
         {
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
             var user = _evoNaploContext.Users.FirstOrDefault(u => u.Id == id);
             if(user != null)
             {
-                return new UserDTO(user);
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == user.Id))
+                {
+                    return new UserDTO(user, true);
+                }
+                else
+                {
+                    return new UserDTO(user, false);
+                }
             }
             else
             {

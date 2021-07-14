@@ -32,13 +32,22 @@ namespace EvoNaploTFS.Services
             return admins.ToList();
         }
 
-        public IEnumerable<UserDTO> ListActiveAdmins()
+        public IEnumerable<UserDTO> ListAdmins()
         {
-            var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin && m.IsActive == true);
+            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin);
             List<UserDTO> result = new List<UserDTO>();
             foreach (var admin in admins)
             {
-                result.Add(new UserDTO(admin));
+                if (UsersOnSemester.Any(usersOnSemester => usersOnSemester.UserId == admin.Id))
+                {
+                    result.Add(new UserDTO(admin, true));
+                }
+                else
+                {
+                    result.Add(new UserDTO(admin, false));
+                }
             }
             return result;
 
