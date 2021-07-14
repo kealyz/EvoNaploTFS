@@ -12,7 +12,7 @@ import UserPageView from './AppPages/UserPageView/UserPageView';
 import EditUserPage from './AppPages/EditUserPage/EditUserPage';
 import SemesterPageView from './AppPages/SemesterPageView/SemesterPageView';
 import EditSemesterPage from './AppPages/EditSemesterPage/EditSemesterPage';
-import AddSemesterPage from './AppPages/RegisterPage/AddSemesterPage';
+import AddSemesterPage from './AppPages/SemesterAddPage/AddSemesterPage';
 import ProjectPageView from './AppPages/ProjectPageView/ProjectPageView';
 import EditProjectsPage from './AppPages/EditProjectsPage/EditProjectsPage';
 import SemesterStartStudentPage from './AppPages/SemesterStartPage/SemesterStartStudentPage';
