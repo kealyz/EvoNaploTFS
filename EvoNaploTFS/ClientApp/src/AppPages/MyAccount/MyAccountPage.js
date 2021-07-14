@@ -3,21 +3,9 @@ import UserImg from "../../components/Pictures/user.png";
 import '../../AppPages/UserPageView/UserPageView.css'
 
 
-export default function UserPageView(props) {
+export default function MyAccountPage(props) {
     const [user, setUser] = useState({ Id: 0, Name: "", IsActive: "", Email: "", Phone: "" });
 
-    const [session, setSession] = useState();
-
-    useEffect(() => {
-        (
-            async () => {
-                const response = await fetch('api/Session', { method: 'GET' });
-                const content = await response.json();
-
-                await setSession(content);
-            }
-        )();
-    }, []);
 
     useEffect(() => {
         if (props.match.params.id !== undefined) {
