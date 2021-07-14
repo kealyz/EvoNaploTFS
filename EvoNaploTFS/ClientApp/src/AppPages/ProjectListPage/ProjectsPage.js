@@ -39,6 +39,9 @@ export default function ProjectsPage() {
                 return (
                     <div>
                         Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
+                        <a href="/AddProjectPage" style={{ float: 'right' }}>
+                            <input type="button" value="Add Project" />
+                        </a>
                         <br />
                         <br />
                         <ListTable data={search(data)} headings={["Project name", "Description", "Source link", "Technologies", "Semester Id"]} url={'api/Project'} />
