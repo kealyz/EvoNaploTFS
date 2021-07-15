@@ -24,7 +24,6 @@
     <Folder Include="ClientApp\src\AppPages\AdminAddPage\" />
     <Folder Include="ClientApp\src\AppPages\MentorAddPage\" />
     <Folder Include="ClientApp\src\AppPages\AdminListPage\" />
-    <Folder Include="ClientApp\src\AppPages\ProjectAddPage\" />
     <Folder Include="ClientApp\src\AppPages\StudentAddPage\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Migrations\" />

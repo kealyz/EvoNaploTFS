@@ -1,19 +1,44 @@
 ﻿import React, { useEffect, useState } from 'react';
 import UserImg from "../../components/Pictures/user.png";
 import '../../AppPages/UserPageView/UserPageView.css'
+import UnauthorizedPage from '../../components/Unauthorized';
 
 
-export default function MyAccountPage(props) {
+export default function MyAccountPage() {
     const [user, setUser] = useState({ Id: 0, Name: "", IsActive: "", Email: "", Phone: "" });
-
+    const [session, setSession] = useState();
+    const [myProjects, setMyProjects] = useState();
 
     useEffect(() => {
-        if (props.match.params.id !== undefined) {
-            fetch('api/User/GetUserById/?id=' + props.match.params.id)
-                .then(response => response.json())
-                .then(json => setUser({ Id: json.id, Name: json.name, IsActive: json.isActive, Email: json.email, Phone: json.phoneNumber }))
-        }   
+        (
+            async () => {
+                const response = await fetch('api/Session', { method: 'GET' });
+                const content = await response.json();
+
+                await setSession(content);
+            }
+        )();
     }, []);
+
+    useEffect(() => {
+        if (session !== undefined) {
+            if (session.title !== "Unauthorized") {
+                fetch('api/User/GetUserById/?id=' + session.id)
+                    .then(response => response.json())
+                    .then(json => setUser({ Id: json.id, Name: json.name, IsActive: json.isActive, Email: json.email, Phone: json.phoneNumber }));
+            }
+        }
+    }, [session]);
+
+    useEffect(() => {
+        if (session !== undefined) {
+            if (session.title !== "Unauthorized") {
+                fetch('api/Project/MyProjects/?userId=' + session.id)
+                    .then(response => response.json())
+                    .then(json => setMyProjects(json));
+            }
+        }
+    }, [session]);
 
     function renderUserData() {
         return (
@@ -32,33 +57,51 @@ export default function MyAccountPage(props) {
         );
     }
 
-    if (Object.keys(user).length == 0) {
+    function GetMyProjects() {
+        if (myProjects !== undefined) {
+            return (
+                <div>
+                    <h3>Your projects</h3>
+                    <ul>
+                        {
+                            myProjects.map(project => {
+                                return (<li>{project.projectName}</li>);
+                            })
+                        }
+                    </ul>
+                </div>
+            );
+        }
         return (
-            <p>User not found</p>
+            <h3>You have no projects yet.</h3>
         );
     }
-    else if (user.id == -1) {
-        return (
-            <p>User not found</p>
-        );
+
+    if (session !== undefined) {
+        if (session.title !== "Unauthorized") {
+            return (
+                <div class="DivCard">
+                    <table class="MainDisplayTable">
+                        <tr>
+                            <td>
+                                <img id="UserImage" src={UserImg} />
+                            </td>
+                            <td>
+                                <h2>
+                                    {user.Name}
+                                </h2>
+                                {renderUserData()}
+                            </td>
+                        </tr>
+                    </table>
+
+                    {GetMyProjects()}
+
+                </div>
+            );
+        }
     }
-    else {
-        return (
-            <div class="DivCard">
-                <table class="MainDisplayTable">
-                    <tr>
-                        <td>
-                            <img id="UserImage" src={UserImg} />
-                        </td>
-                        <td>
-                            <h2>
-                                {user.Name}
-                            </h2>
-                            {renderUserData()}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        );
-    }
+    return (
+        <UnauthorizedPage />
+    );
 }

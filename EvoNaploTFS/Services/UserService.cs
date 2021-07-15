@@ -84,8 +84,14 @@ namespace EvoNaploTFS.Services
 
         public UserDTO GetUserById(int id)
         {
-            var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
-            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
+            int mostRecentSmesterId = -1;
+            List<UsersOnSemester> UsersOnSemester = new List<UsersOnSemester>();
+            if (_evoNaploContext.Semesters.ToList().Count > 0)
+            {
+                mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
+                UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId).ToList();
+            }
+            
             var user = _evoNaploContext.Users.FirstOrDefault(u => u.Id == id);
             if(user != null)
             {

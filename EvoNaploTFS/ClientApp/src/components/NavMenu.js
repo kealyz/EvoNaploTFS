@@ -99,6 +99,9 @@ export default function NavMenu(props) {
                                 <NavLink tag={Link} className="NavLinkFonts" to="/StartSemester">Start Semester</NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink tag={Link} className="NavLinkFonts" to="/MyAccount">My Account</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <a tag={Link} className="NavLinkFonts" onClick={() => Logout()}>Logout</a>
                             </NavItem>
                         </ul>
@@ -114,6 +117,9 @@ export default function NavMenu(props) {
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} className="NavLinkFonts" to="/JoinProject">Join Project</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} className="NavLinkFonts" to="/MyAccount">My Account</NavLink>
                         </NavItem>
                         <NavItem>
                             <a tag={Link} className="NavLinkFonts" onClick={() => Logout()}>Logout</a>

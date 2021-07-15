@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvoNaploTFS.Migrations
 {
     [DbContext(typeof(EvoNaploContext))]
-    [Migration("20210707193632_EvoNaploDB")]
+    [Migration("20210714174928_EvoNaploDB")]
     partial class EvoNaploDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -148,24 +148,6 @@ namespace EvoNaploTFS.Migrations
                     b.ToTable("StudentComments");
                 });
 
-            modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.StudentsOnSemester", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("SemesterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StudentsOnSemesters");
-                });
-
             modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.UserProject", b =>
                 {
                     b.Property<int>("Id")
@@ -184,6 +166,24 @@ namespace EvoNaploTFS.Migrations
                     b.ToTable("UserProjects");
                 });
 
+            modelBuilder.Entity("EvoNaploTFS.Models.TableConnectors.UsersOnSemester", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsersOnSemester");
+                });
+
             modelBuilder.Entity("EvoNaploTFS.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -198,9 +198,6 @@ namespace EvoNaploTFS.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()

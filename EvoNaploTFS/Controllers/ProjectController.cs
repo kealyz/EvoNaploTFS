@@ -70,6 +70,12 @@ namespace EvoNaploTFS.Controllers
             return _projectService.GetMyProjectThisSemester(userId);
         }
 
+        [HttpGet("MyProjects")]
+        public List<ProjectDTO> GetMyProjects(int userId)
+        {
+            return _projectService.GetMyProjects(userId);
+        }
+
         [HttpPost("JoinProject")]
         public async Task<int> JoinProject(int userId,int projectId)
         {

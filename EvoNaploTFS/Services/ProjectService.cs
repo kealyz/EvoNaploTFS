@@ -32,7 +32,7 @@ namespace EvoNaploTFS.Services
         {
             var semesterList = _evoNaploContext.Semesters.ToList();
             var currentSemester = semesterList.OrderByDescending(semester => semester.Id).FirstOrDefault();
-            if(currentSemester == null)
+            if (currentSemester == null)
             {
                 return new List<ProjectDTO>();
             }
@@ -97,12 +97,12 @@ namespace EvoNaploTFS.Services
         public ProjectDTO GetMyProjectThisSemester(int userId)
         {
             var semsterId = _evoNaploContext.Semesters.Max(s => s.Id);
-            var projectIds = _evoNaploContext.Projects.Where(p => p.SemesterId == semsterId).Select(p=>p.Id).ToList();
+            var projectIds = _evoNaploContext.Projects.Where(p => p.SemesterId == semsterId).Select(p => p.Id).ToList();
 
             var userProjects = _evoNaploContext.UserProjects.Where(up => up.UserId == userId).ToList();
             foreach (var up in userProjects)
             {
-                if(projectIds.Contains(up.ProjectId))
+                if (projectIds.Contains(up.ProjectId))
                 {
                     return GetProjectById(up.ProjectId);
                 }
@@ -110,9 +110,35 @@ namespace EvoNaploTFS.Services
             return new ProjectDTO();
         }
 
+        public List<ProjectDTO> GetMyProjects(int userId)
+        {
+            int semsterId = -1;
+            List<UserProject> userProjects = new List<UserProject>();
+            List<int> projectIds = new List<int>();
+            
+            if (!(_evoNaploContext.Semesters.ToList().Count > 0 && _evoNaploContext.Projects.ToList().Count > 0 && _evoNaploContext.UserProjects.ToList().Count > 0))
+            {
+                return new List<ProjectDTO>();
+            }
+
+            semsterId = _evoNaploContext.Semesters.Max(s => s.Id);
+            projectIds = _evoNaploContext.Projects.Select(p => p.Id).ToList();
+            userProjects = _evoNaploContext.UserProjects.Where(up => up.UserId == userId).ToList();
+
+            List<ProjectDTO> myProjects = new List<ProjectDTO>();
+            foreach (var up in userProjects)
+            {
+                if (projectIds.Contains(up.ProjectId))
+                {
+                    myProjects.Add(GetProjectById(up.ProjectId));
+                }
+            }
+            return myProjects;
+        }
+
         public async Task<IEnumerable<UserProject>> JoinProject(int userId, int projectId)
         {
-            await _evoNaploContext.UserProjects.AddAsync(new UserProject(userId,projectId));
+            await _evoNaploContext.UserProjects.AddAsync(new UserProject(userId, projectId));
             _evoNaploContext.SaveChanges();
             return _evoNaploContext.UserProjects.ToList();
         }
