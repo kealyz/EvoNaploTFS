@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from "react";
 import UnauthorizedPage from '../../components/Unauthorized';
 
-export default function EditUserPage(props)
-{
+export default function EditMyAccountPage() {
     const [user, setUser] = useState({
         id: '',
         firstName: '',
@@ -18,10 +17,10 @@ export default function EditUserPage(props)
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        if (props.match.params.id !== undefined) {
-            fetch('api/User/GetUserToEditById/?id=' + props.match.params.id)
+        if (session !== undefined) {
+            fetch('api/User/GetUserToEditById/?id=' + session.id)
                 .then(response => response.json())
-                .then(json => setUser({ id: json.id, firstName: json.firstName, lastName: json.lastName, email: json.email, phoneNumber: json.phoneNumber, password: json.password, password2: json.password }))   
+                .then(json => setUser({ id: json.id, firstName: json.firstName, lastName: json.lastName, email: json.email, phoneNumber: json.phoneNumber, password: json.password, password2: json.password }))
         }
     }, []);
 
@@ -66,8 +65,7 @@ export default function EditUserPage(props)
     }
 
     if (session !== undefined) {
-        if (session.title !== "Unauthorized") {
-            if (session.role === "Admin") {
+        if (session.title !== "Unauthorized")  {
                 return (
                     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
 
@@ -116,10 +114,12 @@ export default function EditUserPage(props)
                             <input type="submit" />
                         </form>
                         {success && <p class="SuccessParagraph">User {user.firstName} successfully edited.</p>}
+                        <a href="/MyAccount" class="joffan">
+                            Back
+             </a>
                     </div>
                 );
             }
-        }
     }
     return (
         <UnauthorizedPage />

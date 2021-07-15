@@ -81,6 +81,9 @@ export default function MyAccountPage() {
         if (session.title !== "Unauthorized") {
             return (
                 <div class="DivCard">
+                    <a href="/EditMyAccountPage" style={{ float: 'right' }}>
+                        <input type="button" value="Edit" />
+                    </a>
                     <table class="MainDisplayTable">
                         <tr>
                             <td>
