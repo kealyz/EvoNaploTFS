@@ -21,7 +21,7 @@ import SemesterStartAdminPage from './AppPages/SemesterStartPage/SemesterStartAd
 import LoginPage from './AppPages/LoginPage/LoginPage';
 import JoinProjectPage from './AppPages/JoinProjectPage/JoinProjectPage';
 import MyAccountPage from './AppPages/MyAccount/MyAccountPage';
-
+import EditMyAccountPage from './AppPages/MyAccount/EditMyAccountPage';
 
 import './custom.css'
 import './components/Accordion.css'
@@ -64,6 +64,7 @@ export default function App() {
             <Route path='/LoginPage' component={LoginPage} />
             <Route path='/JoinProject' component={JoinProjectPage} />
             <Route path='/MyAccount' component={MyAccountPage} />
+            <Route path='/EditMyAccountPage' component={EditMyAccountPage} />
 
         </Layout>
     );
