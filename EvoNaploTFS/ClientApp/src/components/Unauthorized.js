@@ -2,8 +2,8 @@
 export default function UnauthorizedPage() {
     return (
         <div>
-            <h3>Bocsass megfele, de nincs engedelyed.</h3>
-            <p>Tipp: csesztess egy admint a jogokert</p>
+            <h3>You are unauthorized to view this content!</h3>
+            <p>Hint: Talk to an admin for further questions.</p>
         </div>
     );
 }

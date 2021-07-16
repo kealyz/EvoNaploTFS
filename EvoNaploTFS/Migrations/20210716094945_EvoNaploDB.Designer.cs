@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvoNaploTFS.Migrations
 {
     [DbContext(typeof(EvoNaploContext))]
-    [Migration("20210714174928_EvoNaploDB")]
+    [Migration("20210716094945_EvoNaploDB")]
     partial class EvoNaploDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,10 +115,10 @@ namespace EvoNaploTFS.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int>("CommenterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

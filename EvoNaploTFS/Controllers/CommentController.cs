@@ -32,6 +32,12 @@ namespace EvoNaploTFS.Controllers
             return StatusCodes.Status200OK;
         }
 
+        [HttpGet("ProjectComments")]
+        public IEnumerable<CommentDTO> GetProjectComments(int id)
+        {
+            return _commentService.GetProjectComments(id);
+        }
+
         [HttpPost("ProjectComment")]
         public async Task<int> ProjectComment([FromBody] ProjectComment projectComment)
         {

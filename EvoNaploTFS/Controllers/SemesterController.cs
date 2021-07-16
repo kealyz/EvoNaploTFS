@@ -69,6 +69,10 @@ namespace EvoNaplo.Controllers
             return _semesterService.GetSemesterProjects(id);
         }
 
-
+        [HttpPost("JoinSemester")]
+        public async Task JoinSemester(int id)
+        {
+            await _semesterService.JoinSemester(id);
+        }
     }
 }

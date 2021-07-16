@@ -35,7 +35,7 @@ export default function ProjectsPage() {
 
     if (session !== undefined) {
         if (session.title !== "Unauthorized") {
-            if (session.role !== "Student" && Object.keys(data).length > 0) {
+            if (session.role !== "Student") {
                 return (
                     <div>
                         Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
                         </a>
                         <br />
                         <br />
-                        <ListTable data={search(data)} headings={["Project name", "Description", "Source link", "Technologies", "Semester Id"]} url={'api/Project'} />
+                        <ListTable data={search(data)} headings={["Project name", "Description", "Source link", "Technologies", "Semester Id"]} role={session.role} url={'api/Project'} />
                     </div>
                 );
             }

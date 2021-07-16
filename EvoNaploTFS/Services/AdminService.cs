@@ -34,6 +34,8 @@ namespace EvoNaploTFS.Services
 
         public IEnumerable<UserDTO> ListAdmins()
         {
+            if (_evoNaploContext.Semesters.ToList().Count == 0)
+                return new List<UserDTO>();
             var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
             var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
             var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin);

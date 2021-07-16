@@ -45,7 +45,7 @@ export default function StudentsPage() {
                         </a>
                         <br />
                         <br />
-                        <ListTable data={search(data)} url={'api/Semester'} />
+                        <ListTable data={search(data)} headings={["Start date", "End date", "IsAppliable"]} url={'api/Semester'} />
                     </div>
                 );
             }

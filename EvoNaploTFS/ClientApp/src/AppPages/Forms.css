@@ -65,3 +65,14 @@
 .centerCard {
     position: center;
 }
+.justify-content-center {
+    justify-content: center;
+}
+.jzmqfu {
+    width: auto !important;
+}
+
+#button-center {
+    display: block;
+    margin: 0 auto;
+}

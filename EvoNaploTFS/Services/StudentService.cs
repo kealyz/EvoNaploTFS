@@ -12,24 +12,32 @@ namespace EvoNaploTFS.Services
     public class StudentService
     {
         private readonly EvoNaploContext _evoNaploContext;
-        private readonly ILogger<StudentService> _logger;
 
-        public StudentService(ILogger<StudentService> logger, EvoNaploContext EvoNaploContext)
+        public StudentService(EvoNaploContext EvoNaploContext)
         {
-            _logger = logger;
             _evoNaploContext = EvoNaploContext;
         }
         
         public async Task<IEnumerable<User>> AddStudent(User user)
         {
-            _logger.LogInformation($"Diák hozzáadása következik: {user}");
             user.Role = User.RoleTypes.Student;
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             await _evoNaploContext.Users.AddAsync(user);
             _evoNaploContext.SaveChanges();
-            _logger.LogInformation($"Diák hozzáadva.");
             var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student);
             return students.ToList();
+        }
+
+        public bool EmailExists(string email)
+        {
+            if(_evoNaploContext.Users.FirstOrDefault(u => u.Email == email) != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public IEnumerable<UserDTO> ListStudents()

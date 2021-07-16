@@ -7,7 +7,7 @@ import UnauthorizedPage from '../../components/Unauthorized';
 
 const AddSemesterPage = () => {
 
-    const [project, setSemester] = useState({
+    const [semester, setSemester] = useState({
         startDate: '',
         endDate: '',
         isAppliable: false
@@ -32,36 +32,40 @@ const AddSemesterPage = () => {
 
     const handleChange = e => {
         setSemester({
-            ...project,
+            ...semester,
             [e.target.name]: e.target.value
         });
         if (e.target.name === "isAppliable") {
             setSemester({
-                ...project,
+                ...semester,
                 [e.target.name]: e.currentTarget.value === 'true' ? true : false
             })
         }
-        console.log(project);
+        console.log(semester);
     }
     //{"startDate": "2088-01-01T00:00:00", "endDate": "2088-01-01T00:00:00", "isAppliable": true}
 
     const onSubmit = e => {
         e.preventDefault()
 
-        const returnedErrors = EditSemesterValidate(project);
+        const returnedErrors = EditSemesterValidate(semester);
         setErrors(returnedErrors);
 
         if (Object.keys(returnedErrors).length == 0) {
            
-            console.log(project);
-            fetch('api/Semester/AddSemester', { method: 'POST', body: JSON.stringify(project), headers: { "Content-Type": "application/json" } })
+            console.log(semester);
+            fetch('api/Semester/AddSemester', { method: 'POST', body: JSON.stringify(semester), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
+                    setSemester({
+                        startDate: '',
+                        endDate: '',
+                        isAppliable: false
+                    });
                 })
                 .catch(function (error) {
                     setSuccess(false);
                 });
-            document.getElementById("registrationForm").reset();
         }
         else {
             setSuccess(false);
@@ -74,36 +78,38 @@ const AddSemesterPage = () => {
             if (session.role === "Admin") {
                 return (
                     <div class="DivCard">
-                        <h1>Registration</h1>
+                        <h1>Create new semester</h1>
                         <form onSubmit={onSubmit} id="registrationForm">
                             {/* register your input into the hook by invoking the "register" function */}
                             <table>
                                 <tr>
                                     <td>
-                                        <input type="text" name="startDate" value={project.startDate} placeholder="StartDate" onChange={handleChange} />
+                                        Date of start:
+                                        <input type="text" name="startDate" value={semester.startDate} placeholder="2088-01-01T00:00:00" onChange={handleChange} />
                                         {errors.startDate && <p class="ErrorParagraph">{errors.startDate}</p>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="endDate" value={project.endDate} placeholder="EndDate" onChange={handleChange} />
+                                        Date of end:
+                                        <input type="text" name="endDate" value={semester.endDate} placeholder="2089-01-01T00:00:00" onChange={handleChange} />
                                         {errors.endDate && <p class="ErrorParagraph">{errors.endDate}</p>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         {/*<input type="checkbox" name="isAppliable" value="ture" onChange={handleChange} />*/}
-                                        <label >isAppliable</label><br />
-                                        <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} checked={project.isAppliable === true} />
+                                        <label >Is appliable:</label><br />
+                                        <input type="radio" id="isAppliableTrue" name="isAppliable" value={true} onChange={handleChange} checked={semester.isAppliable === true} />
                                         <label for="isAppliableTrue">True</label><br />
-                                        <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} checked={project.isAppliable === false} />
+                                        <input type="radio" id="isAppliableFalse" name="isAppliable" value={false} onChange={handleChange} checked={semester.isAppliable === false} />
                                         <label for="isAppliableFalse">False</label><br />
                                     </td>
                                 </tr>
                             </table>
                             <input type="submit" />
                         </form>
-                        {success && <p class="SuccessParagraph">Semester {project.startDate} : {project.endDate} successfully added.</p>}
+                        {success && <p class="SuccessParagraph">Semester successfully added.</p>}
                         <a href="/Semesters" class="joffan">
                             Back
              </a>
@@ -117,7 +123,7 @@ const AddSemesterPage = () => {
         <UnauthorizedPage />
     );
 }
-//<input type="checkbox" name="isAppliable" value={project.isAppliable} onChange={handleChange} />
-//<input type="text" name="isAppliable" value={project.isAppliable} placeholder="False" onChange={handleChange} />
+//<input type="checkbox" name="isAppliable" value={semester.isAppliable} onChange={handleChange} />
+//<input type="text" name="isAppliable" value={semester.isAppliable} placeholder="False" onChange={handleChange} />
 //{ errors.isAppliable && <p class="ErrorParagraph">{errors.isAppliable}</p> }
 export default AddSemesterPage;

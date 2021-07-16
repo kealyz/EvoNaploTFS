@@ -78,38 +78,30 @@ export default function EditUserPage(props)
                             <table>
                                 <tr>
                                     <td>
+                                        Firstname:
                                         <input type="text" name="firstName" value={user.firstName} placeholder="Firstname" onChange={handleChange} />
                                         {errors.firstName && <p class="ErrorParagraph">{errors.firstName}</p>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
+                                        Lastname:
                                         <input type="text" name="lastName" value={user.lastName} placeholder="Lastname" onChange={handleChange} />
                                         {errors.lastName && <p class="ErrorParagraph">{errors.lastName}</p>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
+                                        Email:
                                         <input type="text" name="email" value={user.email} placeholder="Email" onChange={handleChange} />
                                         {errors.email && <p class="ErrorParagraph">{errors.email}</p>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
+                                        Phone number:
                                         <input type="text" name="phoneNumber" value={user.phoneNumber} placeholder="PhoneNumber" onChange={handleChange} />
                                         {errors.phonenumber && <p class="ErrorParagraph">{errors.phoneNumber}</p>}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="password" name="password" value={user.password} placeholder="Password" onChange={handleChange} />
-                                        {errors.password && <p class="ErrorParagraph">{errors.password}</p>}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="password" name="password2" value={user.password2} placeholder="Confirm password" onChange={handleChange} />
-                                        {errors.password2 && <p class="ErrorParagraph">{errors.password2}</p>}
                                     </td>
                                 </tr>
                             </table>

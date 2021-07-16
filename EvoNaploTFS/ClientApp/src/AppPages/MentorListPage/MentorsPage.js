@@ -39,7 +39,7 @@ export default function MentorsPage() {
                         Filter: <input type="text" value={q} onChange={(e) => setQ(e.target.value)} />
                         <br />
                         <br />
-                        <ListTable data={search(data)} headings={["Name", "Activity", "Email", "Phone"]} url={'api/User'} />
+                        <ListTable data={search(data)} headings={["Name", "Activity", "Email", "Phone"]} role={session.role} url={'api/User'} />
                     </div>
                 );
             }

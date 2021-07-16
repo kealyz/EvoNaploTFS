@@ -83,5 +83,12 @@ namespace EvoNaplo.Services
             }
             return result;
         }
+
+        public async Task JoinSemester(int id)
+        {
+
+            await _evoNaploContext.UsersOnSemester.AddAsync(new EvoNaploTFS.Models.TableConnectors.UsersOnSemester(id,_evoNaploContext.Semesters.Max(s => s.Id)));
+            _evoNaploContext.SaveChanges();
+        }
     }
 }

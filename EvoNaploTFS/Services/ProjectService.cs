@@ -48,8 +48,12 @@ namespace EvoNaploTFS.Services
 
         internal async Task AddProject(Project project)
         {
-            await _evoNaploContext.Projects.AddAsync(project);
-            _evoNaploContext.SaveChanges();
+            if (_evoNaploContext.Semesters.ToList().Count > 0)
+            {
+                project.SemesterId = _evoNaploContext.Semesters.Max(s => s.Id);
+                await _evoNaploContext.Projects.AddAsync(project);
+                _evoNaploContext.SaveChanges();
+            }
         }
 
         public ProjectDTO GetProjectById(int id)
@@ -96,6 +100,10 @@ namespace EvoNaploTFS.Services
 
         public ProjectDTO GetMyProjectThisSemester(int userId)
         {
+            if (_evoNaploContext.Semesters.ToList().Count == 0)
+            {
+                return new ProjectDTO();
+            }
             var semsterId = _evoNaploContext.Semesters.Max(s => s.Id);
             var projectIds = _evoNaploContext.Projects.Where(p => p.SemesterId == semsterId).Select(p => p.Id).ToList();
 
@@ -115,7 +123,7 @@ namespace EvoNaploTFS.Services
             int semsterId = -1;
             List<UserProject> userProjects = new List<UserProject>();
             List<int> projectIds = new List<int>();
-            
+
             if (!(_evoNaploContext.Semesters.ToList().Count > 0 && _evoNaploContext.Projects.ToList().Count > 0 && _evoNaploContext.UserProjects.ToList().Count > 0))
             {
                 return new List<ProjectDTO>();

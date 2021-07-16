@@ -26,6 +26,9 @@ function GetLists(role) {
                     <li>
                         <a href="/Admins"><div class="LinkSelector" />Admins</a>
                     </li>
+                    <li>
+                        <a href="/Semesters"><div class="LinkSelector" />Semesters</a>
+                    </li>
                 </ul>
             </div>
         );
@@ -80,7 +83,7 @@ export default function NavMenu(props) {
     function getNavBar() {
         if (session !== undefined) {
             if (session.title !== "Unauthorized") {
-                if (session.role !== "Student") {
+                if (session.role === "Admin") {
                     return (
                         <ul className="navbar-nav flex-grow">
                             <NavItem>
@@ -93,10 +96,28 @@ export default function NavMenu(props) {
                                 <NavLink tag={Link} className="NavLinkFonts" to="/JoinProject">Join Project</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
+                                <NavLink tag={Link} className="NavLinkFonts" to="/ProjectsStudents">Students and projects</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="NavLinkFonts" to="/StartSemester">Start Semester</NavLink>
+                                <NavLink tag={Link} className="NavLinkFonts" to="/MyAccount">My Account</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <a tag={Link} className="NavLinkFonts" onClick={() => Logout()}>Logout</a>
+                            </NavItem>
+                        </ul>
+                    );
+                }
+                else if (session.role === "Mentor") {
+                    return (
+                        <ul className="navbar-nav flex-grow">
+                            <NavItem>
+                                <NavLink tag={Link} className="NavLinkFonts" to="/">Home</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <DropdownMenu title="Lists" content={GetLists(session.role)} />
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} className="NavLinkFonts" to="/JoinProject">Join Project</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={Link} className="NavLinkFonts" to="/MyAccount">My Account</NavLink>
@@ -111,9 +132,6 @@ export default function NavMenu(props) {
                     <ul className="navbar-nav flex-grow">
                         <NavItem>
                             <NavLink tag={Link} className="NavLinkFonts" to="/">Home</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink tag={Link} className="NavLinkFonts" to="/JoinSemester">Join Semester</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} className="NavLinkFonts" to="/JoinProject">Join Project</NavLink>

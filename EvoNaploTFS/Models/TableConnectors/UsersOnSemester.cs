@@ -13,5 +13,14 @@ namespace EvoNaploTFS.Models.TableConnectors
 
         [ForeignKey("SemesterId")]
         public int SemesterId { get; set; }
+
+        public UsersOnSemester()
+        {
+        }
+        public UsersOnSemester(int userId,int semesterId)
+        {
+            UserId = userId;
+            SemesterId = semesterId;
+        }
     }
 }

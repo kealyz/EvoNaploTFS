@@ -14,7 +14,7 @@ namespace EvoNaploTFS.Models.TableConnectors
         public string Comment { get; set; }
         [ForeignKey("ProjectId")]
         public int ProjectId { get; set; }
-        [ForeignKey("UserId")]
-        public int UserId { get; set; }
+        [ForeignKey("CommenterId")]
+        public int CommenterId { get; set; }
     }
 }

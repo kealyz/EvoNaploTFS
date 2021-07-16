@@ -7,10 +7,10 @@ import UnauthorizedPage from '../../components/Unauthorized';
 const AddProjectPage = () => {
 
     const [project, setProject] = useState({
-        ProjectName: '',
-        Description: '',
-        SourceLink: '',
-        Technologies: '',
+        projectName: '',
+        description: '',
+        sourceLink: '',
+        technologies: ''
     });
 
     const [session, setSession] = useState();
@@ -50,6 +50,12 @@ const AddProjectPage = () => {
             fetch('api/Project/AddProject', { method: 'POST', body: JSON.stringify(project), headers: { "Content-Type": "application/json" } })
                 .then(function (data) {
                     setSuccess(true);
+                    setProject({
+                        projectName: '',
+                        description: '',
+                        sourceLink: '',
+                        technologies: ''
+                    });
                 })
                 .catch(function (error) {
                     setSuccess(false);

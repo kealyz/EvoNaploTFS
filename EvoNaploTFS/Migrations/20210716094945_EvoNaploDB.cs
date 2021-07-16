@@ -43,7 +43,7 @@ namespace EvoNaploTFS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    CommenterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -28,6 +28,12 @@ namespace EvoNaploTFS.Controllers
             return StatusCodes.Status200OK;
         }
 
+        [HttpGet("EmailExists")]
+        public bool EmailExists(string email)
+        {
+            return _studentService.EmailExists(email);
+        }
+
         [HttpGet]
         public IEnumerable<UserDTO> GetStudent()
         {

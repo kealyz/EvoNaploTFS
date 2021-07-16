@@ -25,7 +25,7 @@ export default function SemesterStartStudentPage() {
     }, [projectFields]);
 
     useEffect(() => {
-        
+
         if (studentProjectToEdit !== undefined) {
             console.log(JSON.stringify(studentProjectToEdit));
             fetch('api/ProjectStudent/ProjectsStudentsChanged', { method: 'PUT', body: JSON.stringify(studentProjectToEdit), headers: { "Content-Type": "application/json" } })
@@ -110,20 +110,24 @@ export default function SemesterStartStudentPage() {
 
         }
         return (
-            <DragDropContext onDragEnd={handleOnDragEnd}>
-                <Container>
-                    {projectFields.columnOrder.map(columnId => {
-                        let column = projectFields.columnProjects.find(obj =>
-                            obj.id === columnId);
-                        let tasks = column.projectStudentIds.map(
-                            taskId => projectFields.usersOnProject.find(obj => obj.id == taskId),
-                        );
+            <div>
+                <h2>Managing users on projects</h2>
+                <p>Hint: Drag and drop the users to the selected project.</p>
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <div class="grid-table justify-content-center">
+                        {projectFields.columnOrder.map(columnId => {
+                            let column = projectFields.columnProjects.find(obj =>
+                                obj.id === columnId);
+                            let tasks = column.projectStudentIds.map(
+                                taskId => projectFields.usersOnProject.find(obj => obj.id == taskId),
+                            );
 
 
-                        return <Column key={column.id} column={column} tasks={tasks} />;
-                    })}
-                </Container>
-            </DragDropContext>
+                            return <Column key={column.id} column={column} tasks={tasks} />;
+                        })}
+                    </div>
+                </DragDropContext>
+            </div>
         );
     }
     else {

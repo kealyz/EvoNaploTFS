@@ -64,10 +64,10 @@ export default function JoinProjectPage() {
                         {projects.map(project => {
                             let button;
                             if (project.id === user.projectId) {
-                                button = <input type="button" class="btn btn-danger" onClick={() => LeaveProject(project.id)} value="Leave project" />;
+                                button = <input type="button" class="btn btn-danger" id="button-center" onClick={() => LeaveProject(project.id)} value="Leave project" />;
                             }
                             else {
-                                button = <input type="button" class="btn btn-secondary" disabled value="Already on project" />;
+                                button = <input type="button" class="btn btn-secondary centerDiv" id="button-center" disabled value="Already on project" />;
                             }
                             return (
                                 <div class="grid-card">
@@ -78,6 +78,7 @@ export default function JoinProjectPage() {
                                     <hr />
                                     <p>Technologies</p>
                                     <p>{project.technologies}</p>
+                                    <br/>
                                     {button}
                                 </div>
                             );

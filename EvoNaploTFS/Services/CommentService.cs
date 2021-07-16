@@ -60,5 +60,23 @@ namespace EvoNaploTFS.Services
             }
             return result;
         }
+
+        public IEnumerable<CommentDTO> GetProjectComments(int id)
+        {
+            var comments = _evoNaploContext.ProjectComments.Where(c => c.CommenterId == id);
+            List<ProjectComment> commentsCopy = new List<ProjectComment>();
+            foreach (var comment in comments)
+            {
+                commentsCopy.Add(comment);
+            }
+            List<CommentDTO> result = new List<CommentDTO>();
+            foreach (var comment in commentsCopy)
+            {
+                var commenter = _evoNaploContext.Users.FirstOrDefault(u => u.Id == comment.CommenterId);
+                string commenterName = $"{commenter.FirstName} {commenter.LastName}";
+                result.Add(new CommentDTO(comment.Comment, comment.CommenterId, commenter.Id, $"{commenter.FirstName} {commenter.LastName}"));
+            }
+            return result;
+        }
     }
 }

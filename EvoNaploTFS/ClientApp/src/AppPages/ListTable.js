@@ -51,6 +51,29 @@ export default function RenderTable(props) {
         // code block
     }
 
+    function GetActionButtons(row) {
+        if (props.role === "Admin") {
+            return (
+                <div>
+                    <a href={pageViewURL + row}>
+                        <BsEye className="ActionIcon ViewIcon" />
+                    </a>
+                    <a href={editPageURL + row}>
+                        <BsPencil class="ActionIcon EditIcon" />
+                    </a>
+                    <BsTrashFill class="ActionIcon RemoveIcon" onClick={() => RemoveContent(row, props.url)} />
+                </div>
+            );
+        }
+        return (
+            <div>
+                <a href={pageViewURL + row}>
+                    <BsEye className="ActionIcon ViewIcon" />
+                </a>
+            </div>
+        );
+    }
+
 
     if (width > 600) {
         return (
@@ -71,13 +94,7 @@ export default function RenderTable(props) {
                                     }
                                 })}
                                 <td>
-                                    <a href={pageViewURL + row.id}>
-                                        <BsEye className="ActionIcon ViewIcon" />
-                                    </a>
-                                    <a href={editPageURL + row.id}>
-                                        <BsPencil class="ActionIcon EditIcon" />
-                                    </a>
-                                    <BsTrashFill class="ActionIcon RemoveIcon" onClick={() => RemoveContent(row.id, props.url)} />
+                                    {GetActionButtons(row.id)}
                                 </td>
                             </tr>
                         )}

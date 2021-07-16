@@ -65,7 +65,7 @@ export default function MyAccountPage() {
                     <ul>
                         {
                             myProjects.map(project => {
-                                return (<li>{project.projectName}</li>);
+                                return (<li><a href={"/ProjectPageView/" + project.id}>{project.projectName}</a></li>);
                             })
                         }
                     </ul>
@@ -77,12 +77,28 @@ export default function MyAccountPage() {
         );
     }
 
+    function JoinSemester() {
+        fetch('api/Semester/JoinSemester/?id=' + user.Id, { method: 'POST' })
+            .then(
+                window.location.reload(false)
+            )
+    }
+    function CanJoinSemester() {
+        if (user.IsActive === "Inactive") {
+            return (
+                <input style={{ float: 'right' }} type="button" class="btn btn-outline-primary" onClick={() => JoinSemester()} value="Join semester" />
+            );
+        }
+        return (<div />);
+    }
+
     if (session !== undefined) {
         if (session.title !== "Unauthorized") {
             return (
                 <div class="DivCard">
+                    {CanJoinSemester()}
                     <a href="/EditMyAccountPage" style={{ float: 'right' }}>
-                        <input type="button" value="Edit" />
+                        <input type="button" class="btn btn-outline-warning" value="Edit my profile" />
                     </a>
                     <table class="MainDisplayTable">
                         <tr>

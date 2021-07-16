@@ -18,9 +18,11 @@ namespace EvoNaploTFS.Services
         }
         public IEnumerable<UserDTO> ListStudents()
         {
+            if (_evoNaploContext.Semesters.ToList().Count == 0)
+                return new List<UserDTO>();
             var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
-            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
-            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId).ToList();
+            var students = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Student).ToList();
             List<UserDTO> result = new List<UserDTO>();
             foreach (var student in students)
             {
@@ -37,9 +39,11 @@ namespace EvoNaploTFS.Services
         }
         public IEnumerable<UserDTO> ListActiveMentors()
         {
+            if (_evoNaploContext.Semesters.ToList().Count == 0)
+                return new List<UserDTO>();
             var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
-            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
-            var mentors = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Mentor);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId).ToList();
+            var mentors = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Mentor).ToList();
             List<UserDTO> result = new List<UserDTO>();
             foreach (var mentor in mentors)
             {
@@ -64,9 +68,11 @@ namespace EvoNaploTFS.Services
 
         public IEnumerable<UserDTO> ListActiveAdmins()
         {
+            if (_evoNaploContext.Semesters.ToList().Count == 0)
+                return new List<UserDTO>();
             var mostRecentSmesterId = _evoNaploContext.Semesters.Max(semester => semester.Id);
-            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId);
-            var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin);
+            var UsersOnSemester = _evoNaploContext.UsersOnSemester.Where(usersOnSemester => usersOnSemester.SemesterId == mostRecentSmesterId).ToList();
+            var admins = _evoNaploContext.Users.Where(m => m.Role == User.RoleTypes.Admin).ToList();
             List<UserDTO> result = new List<UserDTO>();
             foreach (var admin in admins)
             {
