@@ -40,10 +40,10 @@ const Login = () => {
             <h1 style={{ textAlign: "center", paddingBottom: "15px" }}>Login</h1>
             <form onSubmit={handleSubmit} >
                 Email:
-                <input type="text" name="email" placeholder="Email" onChange={handleChange} />
+                <input type="text" name="email" placeholder="example@mail.com" onChange={handleChange} />
                 {errors.email && <p class="ErrorParagraph">{errors.email}</p>}
                 Password:
-                <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+                <input type="password" name="password" placeholder="••••••••" onChange={handleChange} />
                 {errors.password && <p class="ErrorParagraph">{errors.password}</p>}
                 <input type="submit" class="btn btn-success" value="Login" />
             </form>
